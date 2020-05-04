@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Display;
  */
 public class IconLoader {
 
+    public static Image AQUA_DUCK_SMALL;
     public static Image CAR;
     public static Image COMMENT;
     public static Image DOOR_OUT;
@@ -27,6 +28,7 @@ public class IconLoader {
 
     static {
         try {
+            AQUA_DUCK_SMALL = loadIcon("/icons/aqua_duck_small.png");
             CAR = loadIcon("/icons/car.png");
             COMMENT = loadIcon("/icons/comment.png");
             DOOR_OUT = loadIcon("/icons/door_out.png");
@@ -47,6 +49,7 @@ public class IconLoader {
      */
     @Override
     protected void finalize() throws Throwable {
+        disposeIcon(AQUA_DUCK_SMALL);
         disposeIcon(CAR);
         disposeIcon(COMMENT);
         disposeIcon(DOOR_OUT);

@@ -59,7 +59,7 @@ public class MainWindow {
     private Control createContents(Composite parent) {
 
         shell.setText(Messages.SOFTWARE_NAME + " - ver." + Messages.SOFTWARE_VERSION);
-        shell.setImage(IconLoader.CAR);
+        shell.setImage(IconLoader.AQUA_DUCK_SMALL);
 
         parent.setLayout( new GridLayout(1, false) );
 

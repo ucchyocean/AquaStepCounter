@@ -8,6 +8,7 @@ package com.github.ucchyocean.aqua.ui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
@@ -94,8 +95,10 @@ public class MainWindowMenu {
         itemHomepage.setImage(IconLoader.WORLD);
         itemHomepage.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                // TODO
-//                new EZBrowser(Display.getCurrent(), SOFTWARE_USAGE_URL);
+                Program program = Program.findProgram("htm");
+                if ( program != null ) {
+                    program.execute(Messages.SOFTWARE_USAGE_URL);
+                }
             }
         });
 

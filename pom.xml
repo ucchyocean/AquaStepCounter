@@ -27,7 +27,6 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
-    <defaultGoal>clean javadoc:jar source:jar deploy</defaultGoal>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -94,7 +93,7 @@
                   <arg value="-t" />
                   <arg value="1.8" />
                   <arg value="-i" />
-                  <arg value="${basedir}/src/main/resources/icons/car.png" />
+                  <arg value="${basedir}/src/main/resources/icons/aqua_duck_small.ico" />
                   <arg value="-v" />
                   <arg value="${project.version}" />
                   <arg value="-d" />
@@ -126,6 +125,11 @@
       <version>4.9</version>
       <scope>system</scope>
       <systemPath>${project.basedir}/lib/swt.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>net.rakugakibox.util</groupId>
+      <artifactId>yaml-resource-bundle</artifactId>
+      <version>1.1</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
