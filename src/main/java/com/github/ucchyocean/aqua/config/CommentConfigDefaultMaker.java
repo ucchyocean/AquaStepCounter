@@ -8,7 +8,8 @@ public class CommentConfigDefaultMaker {
 
     public static void main(String[] args) {
 
-        String folder = "C:\\Users\\ucchy\\git\\AquaStepCounter\\AquaStepCounter\\src\\main\\resources\\config";
+        String folder = "src\\main\\resources\\configs";
+        (new File(folder)).mkdirs();
 
         CommentConfig config = new CommentConfig(
                 "CCJava", "Analyzer for general source codes ver.1.0", CommentConfigType.COMPLEX,

@@ -80,7 +80,6 @@ public class MainWindowMenu {
         itemDesc.setImage(IconLoader.COMMENT);
         itemDesc.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                // TODO
                 String message = new String( Messages.MESSAGE_DESC + "\n--------------------\n\n"
                         + AquaStepCounter.getCommentConfigManager().getDescription() );
                 MessageBox box = new MessageBox(main.getShell(), SWT.NULL);

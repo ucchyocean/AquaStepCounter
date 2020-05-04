@@ -5,11 +5,13 @@
  */
 package com.github.ucchyocean.aqua.config;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.github.ucchyocean.aqua.JarUtility;
 
 /**
  * コメントコンフィグ管理クラス
@@ -18,6 +20,7 @@ import com.github.ucchyocean.aqua.JarUtility;
 public class CommentConfigManager {
 
     private static int MAX_LABEL_LENGTH = 50;
+    private static String DEFAULT_CONFIG_FOLDER = "/configs/";
 
     private ArrayList<CommentConfig> configs = new ArrayList<CommentConfig>();
 
@@ -51,14 +54,33 @@ public class CommentConfigManager {
 
         CommentConfigManager manager = new CommentConfigManager();
 
-        for ( String fileName : JarUtility.getFileList("config") ) {
+        // TODO jarのフォルダ内にあるファイル一覧を取得する方法を調べる
+        for ( String fileName : new String[]{
+                "bat.properties", "ccjava.properties", "css.properties", "html.properties",
+                "inf.properties", "jsp.properties", "properties.properties", "sh.properties",
+                "xml.properties" } ) {
 
-            String contents = JarUtility.getFileAsString(fileName);
+            InputStream is = CommentConfigManager.class.getResourceAsStream(
+                    DEFAULT_CONFIG_FOLDER + fileName);
+            StringBuffer buffer = new StringBuffer();
 
-            CommentConfig config = CommentConfig.load(contents);
-            if ( config == null ) continue;
+            if ( is != null ) {
+                try ( BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8")) ) {
 
-            manager.configs.add(config);
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line + "\n");
+                    }
+
+                    CommentConfig config = CommentConfig.load(buffer.toString());
+                    if ( config == null ) continue;
+
+                    manager.configs.add(config);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return manager;

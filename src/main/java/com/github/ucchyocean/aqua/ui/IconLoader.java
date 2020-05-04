@@ -18,7 +18,6 @@ import org.eclipse.swt.widgets.Display;
  */
 public class IconLoader {
 
-    public static IconLoader INSTANCE;
     public static Image CAR;
     public static Image COMMENT;
     public static Image DOOR_OUT;
@@ -27,15 +26,13 @@ public class IconLoader {
     public static Image WRENCH;
 
     static {
-        INSTANCE = new IconLoader();
-
         try {
-            CAR = INSTANCE.loadIcon("/icons/car.png");
-            COMMENT = INSTANCE.loadIcon("/icons/comment.png");
-            DOOR_OUT = INSTANCE.loadIcon("/icons/door_out.png");
-            HELP = INSTANCE.loadIcon("/icons/help.png");
-            WORLD = INSTANCE.loadIcon("/icons/world.png");
-            WRENCH = INSTANCE.loadIcon("/icons/wrench.png");
+            CAR = loadIcon("/icons/car.png");
+            COMMENT = loadIcon("/icons/comment.png");
+            DOOR_OUT = loadIcon("/icons/door_out.png");
+            HELP = loadIcon("/icons/help.png");
+            WORLD = loadIcon("/icons/world.png");
+            WRENCH = loadIcon("/icons/wrench.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,9 +57,9 @@ public class IconLoader {
     }
 
     // resourcePathで指定されたリソースを取得し、Imageとしてロードします。
-    private Image loadIcon(String resourcePath) throws IOException, FileNotFoundException {
+    private static Image loadIcon(String resourcePath) throws IOException, FileNotFoundException {
 
-        InputStream is = INSTANCE.getClass().getResourceAsStream(resourcePath);
+        InputStream is = IconLoader.class.getResourceAsStream(resourcePath);
         if ( is != null ) {
             Image iconImage = new Image(Display.getCurrent(), is);
             is.close();
