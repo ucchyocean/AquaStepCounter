@@ -1,0 +1,138 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.ucchyocean</groupId>
+  <artifactId>AquaStepCounter</artifactId>
+  <version>0.0.1</version>
+  <description>Step Counter for general-purpose source codes.</description>
+
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License version 3</name>
+      <url>http://www.gnu.org/licenses/lgpl-3.0.en.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>internal.repo</id>
+      <name>Temporary Staging Repository</name>
+      <url>file://${project.basedir}/../mvn-repo</url>
+    </repository>
+  </distributionManagement>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <defaultGoal>clean javadoc:jar source:jar deploy</defaultGoal>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.github.ucchyocean.aqua.AquaStepCounter</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <source>1.8</source>
+          <encoding>UTF-8</encoding>
+          <docencoding>UTF-8</docencoding>
+          <charset>UTF-8</charset>
+          <show>public</show>
+          <nohelp>true</nohelp>
+          <links>
+            <link>https://docs.oracle.com/javase/jp/8/docs/api/</link>
+          </links>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>exewrap</id>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <exec executable="${basedir}/exewrap1.5.0/x64/exewrap.exe"
+                  failonerror="true">
+                  <arg value="-g" />
+                  <arg value="-e" />
+                  <arg value="SHARE" />
+                  <arg value="-t" />
+                  <arg value="1.8" />
+                  <arg value="-i" />
+                  <arg value="${basedir}/src/main/resources/icons/car.png" />
+                  <arg value="-v" />
+                  <arg value="${project.version}" />
+                  <arg value="-d" />
+                  <arg value="AquaStepCounter" />
+                  <arg value="-c" />
+                  <arg value="ucchy" />
+                  <arg value="-j" />
+                  <arg value="${basedir}/target/${project.artifactId}.jar" />
+                </exec>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache</groupId>
+      <artifactId>commons-jrcs</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/org.apache.commons.jrcs.diff.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.swt</groupId>
+      <artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
+      <version>4.9</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/swt.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+</project>
