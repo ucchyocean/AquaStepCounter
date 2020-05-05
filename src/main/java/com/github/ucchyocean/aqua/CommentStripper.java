@@ -55,9 +55,8 @@ public class CommentStripper {
                 // 両方見つかったがブロック型コメントのほうが先に現れた場合か、
                 // ブロック型コメントのみ見つかった場合
                 if ( content.indexOf(blockEnd, bsIndex) == -1 ) {
-                    throw new IOException("Format error.");
                     // 文字列中にブロック開始記号が入ってしまっていた場合
-                    // TODO 対応したいけれど今のところどうしようもない。
+                    throw new IOException("Format error.");
                 }
                 int beIndex = content.indexOf(blockEnd, bsIndex) + blockEnd.length();
                 if ( content.substring(bsIndex, beIndex).indexOf("\n") != -1 ) {
@@ -90,9 +89,8 @@ public class CommentStripper {
         while ( content.indexOf(blockStart) != -1 ) {
             int start = content.indexOf(blockStart);
             if ( content.indexOf(blockEnd, start) == -1 ) {
-                throw new IOException("Format error.");
                 // 文字列中にブロック開始記号が入ってしまっていた場合
-                // TODO 対応したいけれど今のところどうしようもない。
+                throw new IOException("Format error.");
             }
             int end = content.indexOf(blockEnd, start) + blockEnd.length();
             if ( content.substring(start, end).indexOf("\n") != -1 ) {
@@ -182,9 +180,8 @@ public class CommentStripper {
             int innerStart = matcherStart.end() + 1;
             matcherEnd.region(innerStart, contentEnd);
             if ( !matcherEnd.find() ) {
-                throw new IOException("Format error.");
                 // 文字列中にブロック開始記号が入ってしまっていた場合
-                // TODO 対応したいけれど今のところどうしようもない。
+                throw new IOException("Format error.");
             }
             int innerEnd = matcherEnd.start();
             String innerOrg = temp.substring(innerStart, innerEnd);

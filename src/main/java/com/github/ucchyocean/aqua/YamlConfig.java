@@ -80,7 +80,7 @@ public class YamlConfig {
 
     public boolean getBoolean(String key, boolean defaultValue) {
         Object val = map.getOrDefault(key, defaultValue);
-        return ( val != null ) ? (boolean)val : null;
+        return ( val != null ) ? (boolean)val : false;
     }
 
     public String getString(String key, String defaultValue) {

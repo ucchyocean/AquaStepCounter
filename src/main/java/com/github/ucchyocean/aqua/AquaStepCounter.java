@@ -19,6 +19,9 @@ public class AquaStepCounter {
     private CommentConfigManager manager;
     private AquaStepCounterConfig config;
 
+    /**
+     * コンストラクタ
+     */
     public AquaStepCounter() {
 
         // 設定のロード
@@ -28,14 +31,26 @@ public class AquaStepCounter {
         manager = CommentConfigManager.loadFromDefaultFiles();
     }
 
+    /**
+     * インスタンスを取得する
+     * @return インスタンス
+     */
     public static AquaStepCounter getInstance() {
         return instance;
     }
 
+    /**
+     * コンフィグを取得する
+     * @return コンフィグ
+     */
     public static AquaStepCounterConfig getConfig() {
         return instance.config;
     }
 
+    /**
+     * コメント解析管理クラスを取得する
+     * @return コメント解析管理クラス
+     */
     public static CommentConfigManager getCommentConfigManager() {
         return instance.manager;
     }

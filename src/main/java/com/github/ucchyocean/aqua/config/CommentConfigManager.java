@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * コメントコンフィグ管理クラス
+ * コメント解析設定管理クラス
  * @author ucchy
  */
 public class CommentConfigManager {
@@ -22,7 +22,7 @@ public class CommentConfigManager {
     private ArrayList<CommentConfig> configs = new ArrayList<CommentConfig>();
 
     /**
-     * 指定されたフォルダから、コメントコンフィグをロードする
+     * 指定されたフォルダから、コメント解析設定をロードする
      * @param folder フォルダ
      * @return ロードされたCommentConfigManager
      */
@@ -34,7 +34,10 @@ public class CommentConfigManager {
 
         CommentConfigManager manager = new CommentConfigManager();
 
-        for ( File file : folder.listFiles() ) {
+        File[] children = folder.listFiles();
+        if ( children == null ) return manager;
+
+        for ( File file : children ) {
 
             if ( !file.getName().endsWith(".properties") ) continue;
 
@@ -47,14 +50,18 @@ public class CommentConfigManager {
         return manager;
     }
 
+    /**
+     * jarファイル内から、デフォルトのコメント解析設定を読み込みする
+     * @return デフォルトのコメント解析設定を読み込んだ、コメント解析設定クラス
+     */
     public static CommentConfigManager loadFromDefaultFiles() {
 
         CommentConfigManager manager = new CommentConfigManager();
 
-        // TODO jarのフォルダ内にあるファイル一覧を取得する方法を調べる
-        for ( String fileName : new String[]{
+        for ( String fileName : new String[] {
                 "bat.yml", "ccjava.yml", "css.yml", "html.yml", "inf.yml",
                 "jsp.yml", "properties.yml", "sh.yml", "xml.yml" } ) {
+            // NOTE: CommentConfigManagerTestのテストケースで失敗する場合は、このリストが不足している可能性がある。
 
             InputStream is = CommentConfigManager.class.getResourceAsStream(
                     DEFAULT_CONFIG_FOLDER + fileName);
@@ -71,9 +78,9 @@ public class CommentConfigManager {
     }
 
     /**
-     * 指定された拡張子に対応するコメントコンフィグを返す
+     * 指定された拡張子に対応するコメント解析設定を返す
      * @param suffix 拡張子
-     * @return コメントコンフィグ。対応するコメントコンフィグが見つからない場合はnullが返される。
+     * @return コメント解析設定。対応するコメント解析設定が見つからない場合はnullが返される。
      */
     public CommentConfig getConfig(String suffix) {
 
@@ -83,6 +90,10 @@ public class CommentConfigManager {
         return null;
     }
 
+    /**
+     * ロードされているすべてのコメント解析設定の説明文を生成する
+     * @return 説明文
+     */
     public String getDescription() {
 
         StringBuffer output = new StringBuffer();
@@ -105,5 +116,13 @@ public class CommentConfigManager {
         }
 
         return output.toString();
+    }
+
+    /**
+     * ロードされているすべてのコメント解析設定を返す
+     * @return すべてのコメント解析設定
+     */
+    public ArrayList<CommentConfig> getAllConfig() {
+        return configs;
     }
 }

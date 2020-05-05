@@ -15,7 +15,7 @@ import java.util.List;
 import com.github.ucchyocean.aqua.YamlConfig;
 
 /**
- * コメント設定
+ * コメント解析設定クラス
  * @author ucchy
  */
 public class CommentConfig {
@@ -61,6 +61,10 @@ public class CommentConfig {
         this.extraSimbol = extraSimbol;
     }
 
+    /**
+     * 指定されたファイルに保存する
+     * @param file 保存先
+     */
     public void save(File file) {
 
         YamlConfig config = new YamlConfig();
@@ -76,10 +80,14 @@ public class CommentConfig {
             config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
-            // TODO throwすべきか検討する
         }
     }
 
+    /**
+     * 指定されたファイルからロードする
+     * @param file 読み込み元
+     * @return 読み込まれたコメント解析クラス
+     */
     public static CommentConfig load(File file) {
 
         try (FileReader reader = new FileReader(file)) {
@@ -87,12 +95,16 @@ public class CommentConfig {
             return makeCommentConfigFromYaml(yaml);
         } catch (IOException e) {
             e.printStackTrace();
-            // TODO throwすべきか検討する
         }
 
         return null;
     }
 
+    /**
+     * 指定されたInputStreamからロードする
+     * @param stream 読み込み元
+     * @return 読み込まれたコメント解析クラス
+     */
     public static CommentConfig load(InputStream stream) {
 
         try {
@@ -100,12 +112,12 @@ public class CommentConfig {
             return makeCommentConfigFromYaml(yaml);
         } catch (IOException e) {
             e.printStackTrace();
-            // TODO throwすべきか検討する
         }
 
         return null;
     }
 
+    // 指定されたYamlConfigからCommentConfigを生成する
     private static CommentConfig makeCommentConfigFromYaml(YamlConfig yaml) {
         return new CommentConfig(
                 yaml.getString("name", ""),
@@ -119,6 +131,7 @@ public class CommentConfig {
                 );
     }
 
+    // ArrayList<String> を String[] に変換する
     private static String[] convertStringList(ArrayList<String> list) {
         String[] dest = new String[list.size()];
         list.toArray(dest);

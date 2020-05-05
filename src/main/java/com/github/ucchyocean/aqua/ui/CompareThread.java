@@ -12,11 +12,11 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 
 import com.github.ucchyocean.aqua.AquaStepCounter;
+import com.github.ucchyocean.aqua.FileDiffer;
+import com.github.ucchyocean.aqua.FileDifferResult;
 import com.github.ucchyocean.aqua.FolderDifferResult;
 import com.github.ucchyocean.aqua.FolderFileList;
 import com.github.ucchyocean.aqua.Messages;
-import com.github.ucchyocean.aqua.FileDiffer;
-import com.github.ucchyocean.aqua.FileDifferResult;
 import com.github.ucchyocean.aqua.config.CommentConfig;
 import com.github.ucchyocean.aqua.config.CommentConfigManager;
 
@@ -61,9 +61,8 @@ public class CompareThread extends Thread {
 
         FolderDifferResult results = new FolderDifferResult(src, dist);
 
-        // TODO 設定から読むようにする
-        boolean deleteSpaces = true;
-        boolean deleteComments = true;
+        boolean deleteSpaces = AquaStepCounter.getConfig().isStripWhite();
+        boolean deleteComments = AquaStepCounter.getConfig().isStripComment();
 
         CommentConfigManager manager = AquaStepCounter.getCommentConfigManager();
 

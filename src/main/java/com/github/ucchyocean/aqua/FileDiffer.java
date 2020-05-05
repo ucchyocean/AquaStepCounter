@@ -143,7 +143,6 @@ public class FileDiffer {
 
         // diffを実行
         Revision rev = Diff.diff(oldContentTemp, newContentTemp);
-        // TODO revのnullチェック必要？
 
         // 新しいファイルの行数を初期値として設定する
         result.noChanged = newContentTemp.length;

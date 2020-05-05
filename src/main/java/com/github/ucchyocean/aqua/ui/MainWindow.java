@@ -165,9 +165,7 @@ public class MainWindow {
         }
 
         String[] exportData = lastData.getExportData( table.getContents() );
-        BufferedWriter writer = null;
-        try {
-            writer = new BufferedWriter( new FileWriter(file) );
+        try (BufferedWriter writer = new BufferedWriter( new FileWriter(file) )) {
             for ( int i=0; i<exportData.length; i++ ) {
                 writer.write(exportData[i]);
                 writer.newLine();
@@ -179,13 +177,6 @@ public class MainWindow {
             box.setText(Messages.TITLE_EXCEPTION);
             box.setMessage(e.toString());
             box.open();
-
-        } finally {
-            try {
-                writer.close();
-            } catch (IOException e) {
-                // do nothing.
-            }
         }
     }
 

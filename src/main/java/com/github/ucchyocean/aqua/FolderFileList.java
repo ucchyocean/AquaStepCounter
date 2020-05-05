@@ -79,9 +79,11 @@ public class FolderFileList {
 
         if ( file.isDirectory() ) {
             File[] children = file.listFiles();
-            for ( int i=0; i<children.length; i++ ) {
-                output.addAll( createFileListInternal( basedir,
-                        children[i].getAbsolutePath().replace(basedir, "") ) );
+            if ( children != null ) {
+                for ( int i=0; i<children.length; i++ ) {
+                    output.addAll( createFileListInternal( basedir,
+                            children[i].getAbsolutePath().replace(basedir, "") ) );
+                }
             }
         }
 
