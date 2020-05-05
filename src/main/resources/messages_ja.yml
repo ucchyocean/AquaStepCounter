@@ -3,7 +3,7 @@
 SOFTWARE_NAME: "${project.name}"
 SOFTWARE_VERSION: "${project.version}"
 SOFTWARE_AUTHOR_INFO: "ucchy"
-SOFTWARE_DATE_INFO: "2020/05/04"
+SOFTWARE_DATE_INFO: "${build.date}"
 SOFTWARE_USAGE_URL: "https://github.com/ucchyocean/AquaStepCounter"
 
 # メニュー項目

@@ -106,15 +106,7 @@ public class MainWindowMenu {
         itemVersion.setImage(IconLoader.HELP);
         itemVersion.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                String message = String.format(
-                        "%s - ver.%s\n\tcomposed by %s\n\t%s",
-                        Messages.SOFTWARE_NAME, Messages.SOFTWARE_VERSION,
-                        Messages.SOFTWARE_AUTHOR_INFO, Messages.SOFTWARE_DATE_INFO
-                        );
-                MessageBox box = new MessageBox(main.getShell(), SWT.NULL);
-                box.setText(Messages.TITLE_VERSION);
-                box.setMessage(message);
-                box.open();
+                new InformationDialog(main.getShell()).open();
             }
         });
     }

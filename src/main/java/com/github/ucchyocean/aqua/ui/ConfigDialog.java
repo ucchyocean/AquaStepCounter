@@ -35,6 +35,7 @@ public class ConfigDialog {
     private Control createContents(Composite parent) {
 
         shell.setText(Messages.TITLE_PREFS);
+        shell.setSize(350, 200);
 
         parent.setLayout( new GridLayout(1, false) );
 
@@ -50,7 +51,8 @@ public class ConfigDialog {
 
         // ボタンバー
         Composite buttonComp = new Composite(parent, SWT.NONE);
-        buttonComp.setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
+        buttonComp.setLayoutData( new GridData(GridData.FILL_HORIZONTAL |
+                GridData.GRAB_VERTICAL | GridData.VERTICAL_ALIGN_END) );
         buttonComp.setLayout( new GridLayout(2, false) );
 
         Button okButton = new Button(buttonComp, SWT.PUSH);
@@ -76,8 +78,6 @@ public class ConfigDialog {
                 shell.close();
             }
         });
-
-        shell.pack();
 
         return parent;
     }
