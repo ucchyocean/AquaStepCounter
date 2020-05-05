@@ -28,7 +28,7 @@ public class IconLoader {
 
     static {
         try {
-            AQUA_DUCK_SMALL = loadIcon("/icons/aqua_duck_small.png");
+            AQUA_DUCK_SMALL = loadIcon("/icons/duck2_32x32_dot2.png");
             CAR = loadIcon("/icons/car.png");
             COMMENT = loadIcon("/icons/comment.png");
             DOOR_OUT = loadIcon("/icons/door_out.png");

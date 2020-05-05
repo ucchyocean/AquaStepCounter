@@ -68,9 +68,10 @@ public class InformationDialog {
         buttonComp.setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
         buttonComp.setLayout( new GridLayout(1, false) );
 
+        GridData gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_END);
+        gd.widthHint = 100;
         Button okButton = new Button(buttonComp, SWT.PUSH);
-        okButton.setLayoutData( new GridData(
-                GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_END) );
+        okButton.setLayoutData(gd);
         okButton.setText("OK");
         okButton.addSelectionListener( new SelectionAdapter() {
             public void widgetSelected(SelectionEvent event) {

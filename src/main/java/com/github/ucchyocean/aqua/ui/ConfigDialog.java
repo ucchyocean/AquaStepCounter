@@ -55,9 +55,10 @@ public class ConfigDialog {
                 GridData.GRAB_VERTICAL | GridData.VERTICAL_ALIGN_END) );
         buttonComp.setLayout( new GridLayout(2, false) );
 
+        GridData gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_END);
+        gd.widthHint = 100;
         Button okButton = new Button(buttonComp, SWT.PUSH);
-        okButton.setLayoutData( new GridData(
-                GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_END) );
+        okButton.setLayoutData(gd);
         okButton.setText("OK");
         okButton.addSelectionListener( new SelectionAdapter() {
             public void widgetSelected(SelectionEvent event) {
@@ -70,8 +71,10 @@ public class ConfigDialog {
         });
         shell.setDefaultButton(okButton);
 
+        gd = new GridData(GridData.END);
+        gd.widthHint = 100;
         Button cancelButton = new Button(buttonComp, SWT.PUSH);
-        cancelButton.setLayoutData( new GridData(GridData.END) );
+        cancelButton.setLayoutData(gd);
         cancelButton.setText("Cancel");
         cancelButton.addSelectionListener( new SelectionAdapter() {
             public void widgetSelected(SelectionEvent event) {

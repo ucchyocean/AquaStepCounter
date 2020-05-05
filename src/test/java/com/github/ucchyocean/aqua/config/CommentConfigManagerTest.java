@@ -21,8 +21,10 @@ public class CommentConfigManagerTest extends TestCase {
 
         ArrayList<CommentConfig> configs = new ArrayList<>();
         File[] files = (new File("src\\main\\resources\\configs")).listFiles();
-        for ( File file : files ) {
-            configs.add(CommentConfig.load(file));
+        if ( files != null ) {
+            for ( File file : files ) {
+                configs.add(CommentConfig.load(file));
+            }
         }
 
         CommentConfigManager manager = CommentConfigManager.loadFromDefaultFiles();
