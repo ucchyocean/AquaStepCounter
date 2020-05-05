@@ -1,0 +1,17 @@
+extraSimbol: []
+supportedSuffixes:
+- .c
+- .cc
+- .cpp
+- .rc
+- .h
+- .hh
+- .java
+- .js
+- .rul
+name: CCJava
+blockCommentEndSimbol: '*/'
+description: Analyzer for general source codes ver.1.0
+blockCommentStartSimbol: /*
+type: COMPLEX
+lineCommentSimbol: //

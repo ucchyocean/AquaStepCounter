@@ -1,11 +1,10 @@
 
 # ソフトウェア情報
-SOFTWARE_NAME: "Aqua Step Counter"
-SOFTWARE_VERSION: "0.1"
+SOFTWARE_NAME: "${project.name}"
+SOFTWARE_VERSION: "${project.version}"
 SOFTWARE_AUTHOR_INFO: "ucchy"
 SOFTWARE_DATE_INFO: "2020/05/04"
-SOFTWARE_USAGE_URL =
-"https://github.com/ucchyocean/AquaStepCounter"
+SOFTWARE_USAGE_URL: "https://github.com/ucchyocean/AquaStepCounter"
 
 # メニュー項目
 MENU_MAIN: "メニュー(&M)"
@@ -39,20 +38,20 @@ MESSAGE_ERROR: "エラーが発生しました"
 MESSAGE_INTERRUPT: "中断しました"
 
 # 表領域のラベル
-TABLE_LABELS: 
-  - "dir"
-  - "file name"
-  - "nochanged"
-  - "edited"
-  - "added"
-  - "deleted"
+TABLE_LABELS:
+- dir
+- file name
+- nochanged
+- edited
+- added
+- deleted
 
 # 設定関連
 PREFS_NAME_STRIP_COMMENT: "コメントを比較対象としない"
 PREFS_NAME_STRIP_WHITE: "空白、空行を比較対象としない"
 
 # エクスポートのファイル種類とその説明
-EXPORT_SUFS: 
-  - "*.csv"
-EXPORT_DESCS: 
-  - "CSV (カンマ区切り) (*.csv)"
+EXPORT_SUFS:
+- '*.csv'
+EXPORT_DESCS:
+- 'CSV (カンマ区切り) (*.csv)'

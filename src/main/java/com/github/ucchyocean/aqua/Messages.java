@@ -58,19 +58,19 @@ public class Messages {
     public static String MESSAGE_INTERRUPT = "中断しました";
 
     // 表領域のラベル
-    public static String[] TABLE_LABELS = new String[] {
-            "dir", "file name", "nochanged", "edited", "added", "deleted"};
+    public static ArrayList<String> TABLE_LABELS = makeStringList(
+            "dir", "file name", "nochanged", "edited", "added", "deleted");
 
     // 設定関連
     public static String PREFS_NAME_STRIP_COMMENT = "コメントを比較対象としない";
     public static String PREFS_NAME_STRIP_WHITE = "空白、空行を比較対象としない";
 
     // エクスポートのファイル種類とその説明
-    public static String[] EXPORT_SUFS = new String[] {"*.csv"};
-    public static String[] EXPORT_DESCS = new String[] {"CSV (カンマ区切り) (*.csv)"};
-
+    public static ArrayList<String> EXPORT_SUFS = makeStringList("*.csv");
+    public static ArrayList<String> EXPORT_DESCS = makeStringList("CSV (カンマ区切り) (*.csv)");
 
     static {
+        // メッセージリソースのロード
         InputStream stream = getResourceInputStream();
         if ( stream != null ) {
             try {
@@ -117,18 +117,26 @@ public class Messages {
         }
     }
 
-    private static InputStream getResourceInputStream() {
+    private static ArrayList<String> makeStringList(String ... args) {
+        ArrayList<String> list = new ArrayList<>();
+        for ( String a : args ) {
+            list.add(a);
+        }
+        return list;
+    }
+
+    protected static InputStream getResourceInputStream() {
 
         String baseName = "messages";
         Locale locale = Locale.getDefault();
 
         ArrayList<String> candidates = new ArrayList<String>();
-        candidates.add(String.format("%s_%s_%s.yaml", baseName, locale.getLanguage(), locale.getCountry()));
-        candidates.add(String.format("%s_%s_%s.yml", baseName, locale.getLanguage(), locale.getCountry()));
-        candidates.add(String.format("%s_%s.yaml", baseName, locale.getLanguage()));
-        candidates.add(String.format("%s_%s.yml", baseName, locale.getLanguage()));
-        candidates.add(baseName + ".yaml");
-        candidates.add(baseName + ".yml");
+        candidates.add(String.format("/%s_%s_%s.yaml", baseName, locale.getLanguage(), locale.getCountry()));
+        candidates.add(String.format("/%s_%s_%s.yml", baseName, locale.getLanguage(), locale.getCountry()));
+        candidates.add(String.format("/%s_%s.yaml", baseName, locale.getLanguage()));
+        candidates.add(String.format("/%s_%s.yml", baseName, locale.getLanguage()));
+        candidates.add("/" + baseName + ".yaml");
+        candidates.add("/" + baseName + ".yml");
 
         for ( String name : candidates ) {
             InputStream stream = Messages.class.getResourceAsStream(name);

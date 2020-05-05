@@ -1,0 +1,9 @@
+extraSimbol: []
+supportedSuffixes:
+- .css
+name: Css
+blockCommentEndSimbol: '*/'
+description: Analyzer for css file ver.1.0
+blockCommentStartSimbol: /*
+type: BLOCK_COMMENT
+lineCommentSimbol: ''

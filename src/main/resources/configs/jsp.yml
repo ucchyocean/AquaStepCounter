@@ -1,0 +1,15 @@
+extraSimbol:
+- <%[@=]?
+- '%>'
+- /*
+- '*/'
+- //
+supportedSuffixes:
+- .jsp
+- .inc
+name: Jsp
+blockCommentEndSimbol: --%>
+description: Analyzer for jsp file ver.1.0
+blockCommentStartSimbol: <%--
+type: JSP
+lineCommentSimbol: ''

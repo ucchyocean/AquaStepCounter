@@ -5,11 +5,8 @@
  */
 package com.github.ucchyocean.aqua.config;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,30 +53,17 @@ public class CommentConfigManager {
 
         // TODO jarのフォルダ内にあるファイル一覧を取得する方法を調べる
         for ( String fileName : new String[]{
-                "bat.properties", "ccjava.properties", "css.properties", "html.properties",
-                "inf.properties", "jsp.properties", "properties.properties", "sh.properties",
-                "xml.properties" } ) {
+                "bat.yml", "ccjava.yml", "css.yml", "html.yml", "inf.yml",
+                "jsp.yml", "properties.yml", "sh.yml", "xml.yml" } ) {
 
             InputStream is = CommentConfigManager.class.getResourceAsStream(
                     DEFAULT_CONFIG_FOLDER + fileName);
-            StringBuffer buffer = new StringBuffer();
 
             if ( is != null ) {
-                try ( BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8")) ) {
+                CommentConfig config = CommentConfig.load(is);
+                if ( config == null ) continue;
 
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        buffer.append(line + "\n");
-                    }
-
-                    CommentConfig config = CommentConfig.load(buffer.toString());
-                    if ( config == null ) continue;
-
-                    manager.configs.add(config);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                manager.configs.add(config);
             }
         }
 

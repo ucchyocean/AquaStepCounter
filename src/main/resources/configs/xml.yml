@@ -1,0 +1,14 @@
+extraSimbol: []
+supportedSuffixes:
+- .xml
+- .xsd
+- .xsl
+- .dtd
+- .tld
+- .ism
+name: Xml
+blockCommentEndSimbol: -->
+description: Analyzer for xml file ver.1.0
+blockCommentStartSimbol: <!--
+type: BLOCK_COMMENT
+lineCommentSimbol: ''

@@ -5,16 +5,14 @@
  */
 package com.github.ucchyocean.aqua.config;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+
+import com.github.ucchyocean.aqua.YamlConfig;
 
 /**
  * コメント設定
@@ -65,20 +63,17 @@ public class CommentConfig {
 
     public void save(File file) {
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-
-            Properties prop = new Properties();
-            prop.setProperty("name", name);
-            prop.setProperty("description", description);
-            prop.setProperty("type", type.toString());
-            prop.setProperty("supportedSuffixes", String.join(",", supportedSuffixes));
-            prop.setProperty("blockCommentStartSimbol", blockCommentStartSimbol);
-            prop.setProperty("blockCommentEndSimbol", blockCommentEndSimbol);
-            prop.setProperty("lineCommentSimbol", lineCommentSimbol);
-            prop.setProperty("extraSimbol", String.join("▲", extraSimbol));
-
-            prop.store(writer, null);
-
+        YamlConfig config = new YamlConfig();
+        config.set("name", name);
+        config.set("description", description);
+        config.set("type", type.toString());
+        config.set("supportedSuffixes", supportedSuffixes);
+        config.set("blockCommentStartSimbol", blockCommentStartSimbol);
+        config.set("blockCommentEndSimbol", blockCommentEndSimbol);
+        config.set("lineCommentSimbol", lineCommentSimbol);
+        config.set("extraSimbol", extraSimbol);
+        try {
+            config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
             // TODO throwすべきか検討する
@@ -87,27 +82,9 @@ public class CommentConfig {
 
     public static CommentConfig load(File file) {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-
-            Properties prop = new Properties();
-            prop.load(reader);
-
-            List<String> suffixes = new ArrayList<>();
-            for ( String s : prop.getProperty("supportedSuffixes", "").split(",") ) {
-                suffixes.add(s);
-            }
-
-            return new CommentConfig(
-                    prop.getProperty("name", ""),
-                    prop.getProperty("description", ""),
-                    CommentConfigType.fromString(prop.getProperty("type", "")),
-                    suffixes,
-                    prop.getProperty("blockCommentStartSimbol", ""),
-                    prop.getProperty("blockCommentEndSimbol", ""),
-                    prop.getProperty("lineCommentSimbol", ""),
-                    prop.getProperty("extraSimbol", "").split("▲")
-                    );
-
+        try (FileReader reader = new FileReader(file)) {
+            YamlConfig yaml = YamlConfig.load(reader);
+            return makeCommentConfigFromYaml(yaml);
         } catch (IOException e) {
             e.printStackTrace();
             // TODO throwすべきか検討する
@@ -116,34 +93,36 @@ public class CommentConfig {
         return null;
     }
 
-    public static CommentConfig load(String src) {
+    public static CommentConfig load(InputStream stream) {
 
         try {
-            Properties prop = new Properties();
-            prop.load(new StringReader(src));
-
-            List<String> suffixes = new ArrayList<>();
-            for ( String s : prop.getProperty("supportedSuffixes", "").split(",") ) {
-                suffixes.add(s);
-            }
-
-            return new CommentConfig(
-                    prop.getProperty("name", ""),
-                    prop.getProperty("description", ""),
-                    CommentConfigType.fromString(prop.getProperty("type", "")),
-                    suffixes,
-                    prop.getProperty("blockCommentStartSimbol", ""),
-                    prop.getProperty("blockCommentEndSimbol", ""),
-                    prop.getProperty("lineCommentSimbol", ""),
-                    prop.getProperty("extraSimbol", "").split("▲")
-                    );
-
+            YamlConfig yaml = YamlConfig.load(stream);
+            return makeCommentConfigFromYaml(yaml);
         } catch (IOException e) {
             e.printStackTrace();
             // TODO throwすべきか検討する
         }
 
         return null;
+    }
+
+    private static CommentConfig makeCommentConfigFromYaml(YamlConfig yaml) {
+        return new CommentConfig(
+                yaml.getString("name", ""),
+                yaml.getString("description", ""),
+                CommentConfigType.fromString(yaml.getString("type", "")),
+                yaml.getStringArray("supportedSuffixes", new ArrayList<String>()),
+                yaml.getString("blockCommentStartSimbol", "/*"),
+                yaml.getString("blockCommentEndSimbol", "*/"),
+                yaml.getString("lineCommentSimbol", "//"),
+                convertStringList(yaml.getStringArray("extraSimbol", null))
+                );
+    }
+
+    private static String[] convertStringList(ArrayList<String> list) {
+        String[] dest = new String[list.size()];
+        list.toArray(dest);
+        return dest;
     }
 
     /**

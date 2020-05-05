@@ -8,6 +8,7 @@ package com.github.ucchyocean.aqua.ui;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -118,7 +119,7 @@ public class MainWindow {
 
         // テーブル
         table = new SortTable(parent,
-                SWT.BORDER | SWT.FULL_SELECTION, Messages.TABLE_LABELS);
+                SWT.BORDER | SWT.FULL_SELECTION, convertStringList(Messages.TABLE_LABELS));
         GridData gdata = new GridData(GridData.FILL_BOTH);
         gdata.heightHint = 500;
         gdata.widthHint = 800;
@@ -154,8 +155,8 @@ public class MainWindow {
         }
 
         FileDialog dialog = new FileDialog( shell, SWT.SAVE );
-        String [] exts = Messages.EXPORT_SUFS;
-        String [] filterNames = Messages.EXPORT_DESCS;
+        String[] exts = convertStringList(Messages.EXPORT_SUFS);
+        String[] filterNames = convertStringList(Messages.EXPORT_DESCS);
         dialog.setFilterExtensions(exts);
         dialog.setFilterNames(filterNames);
         String file = dialog.open();
@@ -233,5 +234,11 @@ public class MainWindow {
 
     protected void close() {
         shell.close();
+    }
+
+    private String[] convertStringList(ArrayList<String> list) {
+        String[] dest = new String[list.size()];
+        list.toArray(dest);
+        return dest;
     }
 }

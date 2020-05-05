@@ -35,7 +35,6 @@ public class ConfigDialog {
     private Control createContents(Composite parent) {
 
         shell.setText(Messages.TITLE_PREFS);
-        shell.setImage(IconLoader.AQUA_DUCK_SMALL);
 
         parent.setLayout( new GridLayout(1, false) );
 

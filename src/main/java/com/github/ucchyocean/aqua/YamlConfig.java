@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +69,11 @@ public class YamlConfig {
         }
     }
 
+    public String getRawData() {
+        Yaml yaml = new Yaml();
+        return yaml.dumpAsMap(map);
+    }
+
     public void set(String key, Object value) {
         map.put(key, value);
     }
@@ -82,8 +88,9 @@ public class YamlConfig {
         return ( val != null ) ? val.toString() : null;
     }
 
-    public String[] getStringArray(String key, String[] defaultValue) {
+    @SuppressWarnings("unchecked")
+    public ArrayList<String> getStringArray(String key, ArrayList<String> defaultValue) {
         Object val = map.getOrDefault(key, defaultValue);
-        return ( val != null && val instanceof String[] ) ? (String[])val : null;
+        return ( val != null && val instanceof ArrayList<?> ) ? (ArrayList<String>)val : null;
     }
 }

@@ -31,3 +31,6 @@ release
 *.iml
 bin/
 dependency-reduced-pom.xml
+classpath-data.json
+
+/config.yml

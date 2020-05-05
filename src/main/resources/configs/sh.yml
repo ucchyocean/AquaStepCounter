@@ -1,0 +1,10 @@
+extraSimbol:
+- ^#!.*$
+supportedSuffixes:
+- .sh
+name: Sh
+blockCommentEndSimbol: ''
+description: Analyzer for shell file ver.1.0
+blockCommentStartSimbol: ''
+type: SHELL
+lineCommentSimbol: "^[ \t]*#.*$"
