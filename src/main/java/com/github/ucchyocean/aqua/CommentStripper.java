@@ -169,7 +169,7 @@ public class CommentStripper {
         String scriptLineSimbol = extra[4];
 
         String temp = deleteBlockComment(input, blockStart, blockEnd);
-        String output = new String(temp);
+        StringBuffer output = new StringBuffer(temp);
         int contentEnd = temp.length() - 1;
 
         Pattern patternStart = Pattern.compile(scriptStartRegex, Pattern.CASE_INSENSITIVE);
@@ -191,10 +191,17 @@ public class CommentStripper {
             String innerTemp = deleteBlockComment(innerOrg,
                     scriptBlockStartSimbol, scriptBlockEndSimbol);
             String innerDeleted = deleteLineComment(innerTemp, scriptLineSimbol);
-            output.replaceFirst(Pattern.quote(innerOrg), innerDeleted);
+
+            int replaceStart = output.indexOf(innerOrg);
+            if ( replaceStart < 0 ) {
+                throw new IOException("Internal error. JSP comment parse failed.");
+                // このエラーはまず起きないはず。
+            }
+            int replaceEnd = replaceStart + innerOrg.length();
+            output.replace(replaceStart, replaceEnd, innerDeleted);
         }
 
-        return output;
+        return output.toString();
     }
 
     private static String deleteHtmlComments(String input, String blockStart, String blockEnd,

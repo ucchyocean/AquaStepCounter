@@ -118,7 +118,7 @@ public class MainWindow {
 
         // テーブル
         table = new SortTable(parent,
-                SWT.BORDER | SWT.FULL_SELECTION, Messages.TABLE_LABELS.split(";"));
+                SWT.BORDER | SWT.FULL_SELECTION, Messages.TABLE_LABELS);
         GridData gdata = new GridData(GridData.FILL_BOTH);
         gdata.heightHint = 500;
         gdata.widthHint = 800;
@@ -154,8 +154,8 @@ public class MainWindow {
         }
 
         FileDialog dialog = new FileDialog( shell, SWT.SAVE );
-        String [] exts = Messages.EXPORT_SUFS.split(";");
-        String [] filterNames = Messages.EXPORT_DESCS.split(";");
+        String [] exts = Messages.EXPORT_SUFS;
+        String [] filterNames = Messages.EXPORT_DESCS;
         dialog.setFilterExtensions(exts);
         dialog.setFilterNames(filterNames);
         String file = dialog.open();

@@ -5,8 +5,10 @@
  */
 package com.github.ucchyocean.aqua;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * メッセージリソースクラス
@@ -56,59 +58,82 @@ public class Messages {
     public static String MESSAGE_INTERRUPT = "中断しました";
 
     // 表領域のラベル
-    public static String TABLE_LABELS = "dir;file name;nochanged;edited;added;deleted";
+    public static String[] TABLE_LABELS = new String[] {
+            "dir", "file name", "nochanged", "edited", "added", "deleted"};
 
     // 設定関連
     public static String PREFS_NAME_STRIP_COMMENT = "コメントを比較対象としない";
     public static String PREFS_NAME_STRIP_WHITE = "空白、空行を比較対象としない";
 
     // エクスポートのファイル種類とその説明
-    public static String EXPORT_SUFS = "*.csv";
-    public static String EXPORT_DESCS = "CSV (カンマ区切り) (*.csv)";
+    public static String[] EXPORT_SUFS = new String[] {"*.csv"};
+    public static String[] EXPORT_DESCS = new String[] {"CSV (カンマ区切り) (*.csv)"};
 
 
     static {
-        try {
-            ResourceBundle bundle = ResourceBundle.getBundle("messages");
+        InputStream stream = getResourceInputStream();
+        if ( stream != null ) {
+            try {
+                YamlConfig config = YamlConfig.load(stream);
 
-            SOFTWARE_NAME = bundle.getString("SOFTWARE_NAME");
-            SOFTWARE_VERSION = bundle.getString("SOFTWARE_VERSION");
-            SOFTWARE_AUTHOR_INFO = bundle.getString("SOFTWARE_AUTHOR_INFO");
-            SOFTWARE_DATE_INFO = bundle.getString("SOFTWARE_DATE_INFO");
-            MENU_MAIN = bundle.getString("MENU_MAIN");
-            MENU_PREFS = bundle.getString("MENU_PREFS");
-            MENU_EXIT = bundle.getString("MENU_EXIT");
-            MENU_HELP = bundle.getString("MENU_HELP");
-            MENU_DESC = bundle.getString("MENU_DESC");
-            MENU_HOMEPAGE = bundle.getString("MENU_HOMEPAGE");
-            MENU_VERSION = bundle.getString("MENU_VERSION");
-            TITLE_VERSION = bundle.getString("TITLE_VERSION");
-            TITLE_DESC = bundle.getString("TITLE_DESC");
-            TITLE_EXCEPTION = bundle.getString("TITLE_EXCEPTION");
-            TITLE_CANCELED = bundle.getString("TITLE_CANCELED");
-            TITLE_PREFS = bundle.getString("TITLE_PREFS");
-            MESSAGE_MAIN = bundle.getString("MESSAGE_MAIN");
-            MESSAGE_SOURCE = bundle.getString("MESSAGE_SOURCE");
-            MESSAGE_DISTINATION = bundle.getString("MESSAGE_DISTINATION");
-            MESSAGE_RUN = bundle.getString("MESSAGE_RUN");
-            MESSAGE_CANCEL = bundle.getString("MESSAGE_CANCEL");
-            MESSAGE_CLEAR = bundle.getString("MESSAGE_CLEAR");
-            MESSAGE_EXPORT = bundle.getString("MESSAGE_EXPORT");
-            MESSAGE_DESC = bundle.getString("MESSAGE_DESC");
-            MESSAGE_BUTTON_REF = bundle.getString("MESSAGE_BUTTON_REF");
-            MESSAGE_DIR_SELECT = bundle.getString("MESSAGE_DIR_SELECT");
-            MESSAGE_COUNT_RUNNING = bundle.getString("MESSAGE_COUNT_RUNNING");
-            MESSAGE_ERROR = bundle.getString("MESSAGE_ERROR");
-            MESSAGE_INTERRUPT = bundle.getString("MESSAGE_INTERRUPT");
-            TABLE_LABELS = bundle.getString("TABLE_LABELS");
-            PREFS_NAME_STRIP_COMMENT = bundle.getString("PREFS_NAME_STRIP_COMMENT");
-            PREFS_NAME_STRIP_WHITE = bundle.getString("PREFS_NAME_STRIP_WHITE");
-            EXPORT_SUFS = bundle.getString("EXPORT_SUFS");
-            EXPORT_DESCS = bundle.getString("EXPORT_DESCS");
+                SOFTWARE_NAME = config.getString("SOFTWARE_NAME", SOFTWARE_NAME);
+                SOFTWARE_VERSION = config.getString("SOFTWARE_VERSION", SOFTWARE_VERSION);
+                SOFTWARE_AUTHOR_INFO = config.getString("SOFTWARE_AUTHOR_INFO", SOFTWARE_AUTHOR_INFO);
+                SOFTWARE_DATE_INFO = config.getString("SOFTWARE_DATE_INFO", SOFTWARE_DATE_INFO);
+                MENU_MAIN = config.getString("MENU_MAIN", MENU_MAIN);
+                MENU_PREFS = config.getString("MENU_PREFS", MENU_PREFS);
+                MENU_EXIT = config.getString("MENU_EXIT", MENU_EXIT);
+                MENU_HELP = config.getString("MENU_HELP", MENU_HELP);
+                MENU_DESC = config.getString("MENU_DESC", MENU_DESC);
+                MENU_HOMEPAGE = config.getString("MENU_HOMEPAGE", MENU_HOMEPAGE);
+                MENU_VERSION = config.getString("MENU_VERSION", MENU_VERSION);
+                TITLE_VERSION = config.getString("TITLE_VERSION", TITLE_VERSION);
+                TITLE_DESC = config.getString("TITLE_DESC", TITLE_DESC);
+                TITLE_EXCEPTION = config.getString("TITLE_EXCEPTION", TITLE_EXCEPTION);
+                TITLE_CANCELED = config.getString("TITLE_CANCELED", TITLE_CANCELED);
+                TITLE_PREFS = config.getString("TITLE_PREFS", TITLE_PREFS);
+                MESSAGE_MAIN = config.getString("MESSAGE_MAIN", MESSAGE_MAIN);
+                MESSAGE_SOURCE = config.getString("MESSAGE_SOURCE", MESSAGE_SOURCE);
+                MESSAGE_DISTINATION = config.getString("MESSAGE_DISTINATION", MESSAGE_DISTINATION);
+                MESSAGE_RUN = config.getString("MESSAGE_RUN", MESSAGE_RUN);
+                MESSAGE_CANCEL = config.getString("MESSAGE_CANCEL", MESSAGE_CANCEL);
+                MESSAGE_CLEAR = config.getString("MESSAGE_CLEAR", MESSAGE_CLEAR);
+                MESSAGE_EXPORT = config.getString("MESSAGE_EXPORT", MESSAGE_EXPORT);
+                MESSAGE_DESC = config.getString("MESSAGE_DESC", MESSAGE_DESC);
+                MESSAGE_BUTTON_REF = config.getString("MESSAGE_BUTTON_REF", MESSAGE_BUTTON_REF);
+                MESSAGE_DIR_SELECT = config.getString("MESSAGE_DIR_SELECT", MESSAGE_DIR_SELECT);
+                MESSAGE_COUNT_RUNNING = config.getString("MESSAGE_COUNT_RUNNING", MESSAGE_COUNT_RUNNING);
+                MESSAGE_ERROR = config.getString("MESSAGE_ERROR", MESSAGE_ERROR);
+                MESSAGE_INTERRUPT = config.getString("MESSAGE_INTERRUPT", MESSAGE_INTERRUPT);
+                TABLE_LABELS = config.getStringArray("TABLE_LABELS", TABLE_LABELS);
+                PREFS_NAME_STRIP_COMMENT = config.getString("PREFS_NAME_STRIP_COMMENT", PREFS_NAME_STRIP_COMMENT);
+                PREFS_NAME_STRIP_WHITE = config.getString("PREFS_NAME_STRIP_WHITE", PREFS_NAME_STRIP_WHITE);
+                EXPORT_SUFS = config.getStringArray("EXPORT_SUFS", EXPORT_SUFS);
+                EXPORT_DESCS = config.getStringArray("EXPORT_DESCS", EXPORT_DESCS);
 
-        } catch (MissingResourceException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
+    private static InputStream getResourceInputStream() {
+
+        String baseName = "messages";
+        Locale locale = Locale.getDefault();
+
+        ArrayList<String> candidates = new ArrayList<String>();
+        candidates.add(String.format("%s_%s_%s.yaml", baseName, locale.getLanguage(), locale.getCountry()));
+        candidates.add(String.format("%s_%s_%s.yml", baseName, locale.getLanguage(), locale.getCountry()));
+        candidates.add(String.format("%s_%s.yaml", baseName, locale.getLanguage()));
+        candidates.add(String.format("%s_%s.yml", baseName, locale.getLanguage()));
+        candidates.add(baseName + ".yaml");
+        candidates.add(baseName + ".yml");
+
+        for ( String name : candidates ) {
+            InputStream stream = Messages.class.getResourceAsStream(name);
+            if ( stream != null ) return stream;
+        }
+        return null;
+    }
 }

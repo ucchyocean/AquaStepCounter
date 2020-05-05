@@ -50,8 +50,7 @@ public class MainWindowMenu {
         itemPrefs.setImage(IconLoader.WRENCH);
         itemPrefs.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                // TODO
-                //new PrefsDialog( main.getShell() ).open();
+                new ConfigDialog(main.getShell()).open();
             }
         });
 

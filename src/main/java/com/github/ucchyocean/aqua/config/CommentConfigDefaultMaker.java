@@ -56,7 +56,7 @@ public class CommentConfigDefaultMaker {
 
         config = new CommentConfig(
                 "Xml", "Analyzer for xml file ver.1.0", CommentConfigType.BLOCK_COMMENT,
-                makeList(".xml", ".xsd", ".xsl", ".dtd", ".tld"), "<!--", "-->", "");
+                makeList(".xml", ".xsd", ".xsl", ".dtd", ".tld", ".ism"), "<!--", "-->", "");
         config.save(new File(folder, "xml.properties"));
     }
 

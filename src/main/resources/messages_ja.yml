@@ -1,0 +1,58 @@
+
+# ソフトウェア情報
+SOFTWARE_NAME: "Aqua Step Counter"
+SOFTWARE_VERSION: "0.1"
+SOFTWARE_AUTHOR_INFO: "ucchy"
+SOFTWARE_DATE_INFO: "2020/05/04"
+SOFTWARE_USAGE_URL =
+"https://github.com/ucchyocean/AquaStepCounter"
+
+# メニュー項目
+MENU_MAIN: "メニュー(&M)"
+MENU_PREFS: "設定(&C)"
+MENU_EXIT: "終了(&E)"
+MENU_HELP: "ヘルプ(&H)"
+MENU_DESC: "対応済み拡張子一覧を開く(&D)"
+MENU_HOMEPAGE: "ソフトウェアの情報ページを開く(&P)"
+MENU_VERSION: "バージョン情報(&V)"
+
+# 各種ダイアログのタイトル
+TITLE_VERSION: "バージョン情報"
+TITLE_DESC: "対応済み拡張子一覧"
+TITLE_EXCEPTION: "例外"
+TITLE_CANCELED: "中断"
+TITLE_PREFS: "設定"
+
+# 各種ダイアログのメッセージ
+MESSAGE_MAIN: "比較元と比較先を入力して実行ボタンを押してください。ファイル/フォルダをドラックアンドドロップすることもできます。"
+MESSAGE_SOURCE: "比較元(New)"
+MESSAGE_DISTINATION: "比較先(Old)"
+MESSAGE_RUN: "カウント実行"
+MESSAGE_CANCEL: "カウント中断"
+MESSAGE_CLEAR: "表をクリア"
+MESSAGE_EXPORT: "CSVファイルに出力"
+MESSAGE_DESC: "このバージョンに含まれる解析クラスは、以下の通りです。"
+MESSAGE_BUTTON_REF: "フォルダの参照"
+MESSAGE_DIR_SELECT: "に設定するフォルダを選択してください。"
+MESSAGE_COUNT_RUNNING: "ラインカウント処理中......"
+MESSAGE_ERROR: "エラーが発生しました"
+MESSAGE_INTERRUPT: "中断しました"
+
+# 表領域のラベル
+TABLE_LABELS: 
+  - "dir"
+  - "file name"
+  - "nochanged"
+  - "edited"
+  - "added"
+  - "deleted"
+
+# 設定関連
+PREFS_NAME_STRIP_COMMENT: "コメントを比較対象としない"
+PREFS_NAME_STRIP_WHITE: "空白、空行を比較対象としない"
+
+# エクスポートのファイル種類とその説明
+EXPORT_SUFS: 
+  - "*.csv"
+EXPORT_DESCS: 
+  - "CSV (カンマ区切り) (*.csv)"
