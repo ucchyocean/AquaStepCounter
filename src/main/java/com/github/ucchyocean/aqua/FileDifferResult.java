@@ -11,6 +11,12 @@ package com.github.ucchyocean.aqua;
  */
 public class FileDifferResult {
 
+    /** 相対フォルダ */
+    protected String dir;
+
+    /** ファイル名 */
+    protected String fileName;
+
     /** 変更されていない行の行数 */
     protected int noChanged;
 
@@ -27,7 +33,7 @@ public class FileDifferResult {
      * コンストラクタ
      */
     protected FileDifferResult() {
-        this(0, 0, 0, 0);
+        this("", "", 0, 0, 0, 0);
     }
 
     /**
@@ -37,11 +43,39 @@ public class FileDifferResult {
      * @param added
      * @param deleted
      */
-    protected FileDifferResult(int noChanged, int edited, int added, int deleted) {
+    protected FileDifferResult(String dir, String fileName,
+            int noChanged, int edited, int added, int deleted) {
+        this.dir = dir;
+        this.fileName = fileName;
         this.noChanged = noChanged;
         this.edited = edited;
         this.added = added;
         this.deleted = deleted;
+    }
+
+    public String[] getAllAsStringArray() {
+        String[] arr = new String[6];
+        arr[0] = dir;
+        arr[1] = fileName;
+        arr[2] = String.valueOf(noChanged);
+        arr[3] = String.valueOf(edited);
+        arr[4] = String.valueOf(added);
+        arr[5] = String.valueOf(deleted);
+        return arr;
+    }
+
+    /**
+     * @return dir
+     */
+    public String getDir() {
+        return dir;
+    }
+
+    /**
+     * @return fileName
+     */
+    public String getFileName() {
+        return fileName;
     }
 
     /**

@@ -36,8 +36,8 @@ public class MainWindow {
     private Shell shell;
 
     private MainWindowMenu menu;
-    private PathInputComposite srcComp;
-    private PathInputComposite distComp;
+    private PathInputComposite newFolderComp;
+    private PathInputComposite oldFolderComp;
     private SortTable table;
     private Button runButton;
     private Button clearButton;
@@ -70,12 +70,12 @@ public class MainWindow {
         message.setText(Messages.MESSAGE_MAIN);
 
         // 比較元
-        srcComp = new PathInputComposite(parent, Messages.MESSAGE_SOURCE);
-        srcComp.getComposite().setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
+        newFolderComp = new PathInputComposite(parent, Messages.MESSAGE_NEWFOLDER);
+        newFolderComp.getComposite().setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
 
         // 比較先
-        distComp = new PathInputComposite(parent, Messages.MESSAGE_DISTINATION);
-        distComp.getComposite().setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
+        oldFolderComp = new PathInputComposite(parent, Messages.MESSAGE_OLDFOLDER);
+        oldFolderComp.getComposite().setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
 
         // ボタンバー
         Composite buttonComp = new Composite(parent, SWT.NONE);
@@ -138,13 +138,13 @@ public class MainWindow {
         return parent;
     }
 
-    protected void runCompare() {
+    public void runCompare() {
 
         // 全クリア
         table.removeAllContents();
 
         // これ以降は処理が重いのでスレッドで動作
-        thread = new CompareThread(this, srcComp.getText(), distComp.getText() );
+        thread = new CompareThread(this, newFolderComp.getText(), oldFolderComp.getText() );
         thread.start();
     }
 
@@ -182,8 +182,8 @@ public class MainWindow {
 
     public void setControlEnable(boolean enable) {
 
-        srcComp.setEnable(enable);
-        distComp.setEnable(enable);
+        newFolderComp.setEnable(enable);
+        oldFolderComp.setEnable(enable);
         clearButton.setEnabled(enable);
         exportButton.setEnabled(enable);
         menu.setEnable(enable);
@@ -231,5 +231,13 @@ public class MainWindow {
         String[] dest = new String[list.size()];
         list.toArray(dest);
         return dest;
+    }
+
+    public void setOldFolder(String oldFolder) {
+        oldFolderComp.setText(oldFolder);
+    }
+
+    public void setNewFolder(String newFolder) {
+        newFolderComp.setText(newFolder);
     }
 }

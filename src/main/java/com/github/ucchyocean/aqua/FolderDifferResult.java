@@ -41,12 +41,25 @@ public class FolderDifferResult {
         return results.get(key);
     }
 
+    public String[] getExportData() {
+
+        String[][] data = new String[results.size()][];
+
+        int index = 0;
+        for ( FileDifferResult result : results.values() ) {
+            data[index] = result.getAllAsStringArray();
+            index++;
+        }
+
+        return getExportData(data);
+    }
+
     public String[] getExportData(String[][] data) {
 
         ArrayList<String> temp = new ArrayList<String>();
 
-        temp.add("target directory = " + newFolder);
-        temp.add("reference directory = " + oldFolder);
+        temp.add("target directory (new) = " + newFolder);
+        temp.add("reference directory (old) = " + oldFolder);
         temp.add("date = " + date);
         temp.add("");
         for ( int i=0; i<data.length; i++ ) {

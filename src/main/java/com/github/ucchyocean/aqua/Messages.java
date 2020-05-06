@@ -44,8 +44,8 @@ public class Messages {
     public static String MESSAGE_MAIN =
         "比較元と比較先を入力して実行ボタンを押してください。" +
         "ファイル/フォルダをドラックアンドドロップすることもできます。";
-    public static String MESSAGE_SOURCE = "比較元(New)";
-    public static String MESSAGE_DISTINATION = "比較先(Old)";
+    public static String MESSAGE_NEWFOLDER = "比較元(New)";
+    public static String MESSAGE_OLDFOLDER = "比較先(Old)";
     public static String MESSAGE_RUN = "カウント実行";
     public static String MESSAGE_CANCEL = "カウント中断";
     public static String MESSAGE_CLEAR = "表をクリア";
@@ -93,8 +93,8 @@ public class Messages {
                 TITLE_CANCELED = config.getString("TITLE_CANCELED", TITLE_CANCELED);
                 TITLE_PREFS = config.getString("TITLE_PREFS", TITLE_PREFS);
                 MESSAGE_MAIN = config.getString("MESSAGE_MAIN", MESSAGE_MAIN);
-                MESSAGE_SOURCE = config.getString("MESSAGE_SOURCE", MESSAGE_SOURCE);
-                MESSAGE_DISTINATION = config.getString("MESSAGE_DISTINATION", MESSAGE_DISTINATION);
+                MESSAGE_NEWFOLDER = config.getString("MESSAGE_NEWFOLDER", MESSAGE_NEWFOLDER);
+                MESSAGE_OLDFOLDER = config.getString("MESSAGE_OLDFOLDER", MESSAGE_OLDFOLDER);
                 MESSAGE_RUN = config.getString("MESSAGE_RUN", MESSAGE_RUN);
                 MESSAGE_CANCEL = config.getString("MESSAGE_CANCEL", MESSAGE_CANCEL);
                 MESSAGE_CLEAR = config.getString("MESSAGE_CLEAR", MESSAGE_CLEAR);

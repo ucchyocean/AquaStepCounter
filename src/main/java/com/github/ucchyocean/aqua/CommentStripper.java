@@ -18,6 +18,13 @@ import com.github.ucchyocean.aqua.config.CommentConfigType;
  */
 public class CommentStripper {
 
+    /**
+     * コメントを除去する。
+     * @param input 変換前のドキュメント
+     * @param type コメント除去に使用するコメント解析設定
+     * @return 変換後のドキュメント
+     * @throws IOException コメント解析に失敗した場合
+     */
     public static String deleteComments(String input, CommentConfig type) throws IOException {
 
         if ( type.getType() == CommentConfigType.BLOCK_COMMENT ) {
@@ -40,6 +47,15 @@ public class CommentStripper {
         }
     }
 
+    /**
+     * ブロックコメントと行コメントが複合した形式のドキュメントから、コメントを解析して除去する。
+     * @param input 変換前のドキュメント
+     * @param blockStart ブロックコメントの開始シンボル
+     * @param blockEnd ブロックコメントの終了シンボル
+     * @param lineStart 行コメントのシンボル
+     * @return 変換後のドキュメント
+     * @throws IOException コメント解析に失敗した場合
+     */
     private static String deleteComplexComment(String input, String blockStart,
             String blockEnd, String lineStart) throws IOException {
 
@@ -82,6 +98,14 @@ public class CommentStripper {
         }
     }
 
+    /**
+     * ブロックコメントを除去する。
+     * @param input 変換前のドキュメント
+     * @param blockStart ブロックコメントの開始シンボル
+     * @param blockEnd ブロックコメントの終了シンボル
+     * @return 変換後のドキュメント
+     * @throws IOException コメント解析に失敗した場合
+     */
     private static String deleteBlockComment(String input, String blockStart, String blockEnd) throws IOException {
 
         StringBuffer content = new StringBuffer(input);
@@ -103,6 +127,12 @@ public class CommentStripper {
         return content.toString();
     }
 
+    /**
+     * 行コメントを除去する。
+     * @param input 変換前のドキュメント
+     * @param lineStart 行コメントのシンボル
+     * @return 変換後のドキュメント
+     */
     private static String deleteLineComment(String input, String lineStart) {
 
         StringBuffer content = new StringBuffer(input);
@@ -153,6 +183,15 @@ public class CommentStripper {
         return buf.toString();
     }
 
+    /**
+     * JSP形式のコメントを除去する。
+     * @param input 変換前のドキュメント
+     * @param blockStart
+     * @param blockEnd
+     * @param extra
+     * @return 変換後のドキュメント
+     * @throws IOException
+     */
     private static String deleteJspComments(String input, String blockStart, String blockEnd,
             String[] extra) throws IOException {
 
@@ -201,6 +240,15 @@ public class CommentStripper {
         return output.toString();
     }
 
+    /**
+     * HTML形式のコメントを除去する。
+     * @param input 変換前のドキュメント
+     * @param blockStart
+     * @param blockEnd
+     * @param extra
+     * @return 変換後のドキュメント
+     * @throws IOException
+     */
     private static String deleteHtmlComments(String input, String blockStart, String blockEnd,
             String[] extra) throws IOException {
 

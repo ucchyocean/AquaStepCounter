@@ -31,6 +31,8 @@ public class FileDiffer {
     private String oldContent;
     // 変更後のファイルの内容
     private String newContent;
+    // ファイルへの相対パス
+    private String filename;
     // コメントの設定
     private CommentConfig config;
 
@@ -42,6 +44,7 @@ public class FileDiffer {
      * @param config 比較に使用する設定
      */
     public FileDiffer(String oldbase, String newbase, String filename, CommentConfig config) {
+        this.filename = filename;
         this.config = config;
         this.oldContent = getContent(new File(oldbase, filename));
         this.newContent = getContent(new File(newbase, filename));
@@ -119,6 +122,10 @@ public class FileDiffer {
 
         FileDifferResult result = new FileDifferResult();
 
+        File f = new File(filename);
+        result.dir = f.getParent();
+        result.fileName = f.getName();
+
         if ( oldContent == null ) {
             if ( newContent == null ) {
                 // 古いファイルも新しいファイルも存在しない
@@ -175,7 +182,6 @@ public class FileDiffer {
                 throw new IOException("unknown delta type. : " + d.getClass() + " \"" + d.toString() + "\"");
             }
         }
-
 
         return result;
     }

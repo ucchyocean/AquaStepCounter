@@ -74,6 +74,10 @@ public class PathInputComposite extends DnDComposite implements SelectionListene
         return text.getText();
     }
 
+    public void setText(String t) {
+        text.setText(t);
+    }
+
     public void setEnable(boolean enable) {
         label.setEnabled(enable);
         text.setEnabled(enable);

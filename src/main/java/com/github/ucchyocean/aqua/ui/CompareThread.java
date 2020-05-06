@@ -5,8 +5,6 @@
  */
 package com.github.ucchyocean.aqua.ui;
 
-import java.io.File;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
@@ -31,14 +29,14 @@ public class CompareThread extends Thread {
 
     private Display display;
     private MainWindow main;
-    private String src;
-    private String dist;
+    private String newFolder;
+    private String oldFolder;
 
-    public CompareThread(MainWindow main, String src, String dist) {
+    public CompareThread(MainWindow main, String newFolder, String oldFolder) {
         this.display = main.getShell().getDisplay();
         this.main = main;
-        this.src = src;
-        this.dist = dist;
+        this.newFolder = newFolder;
+        this.oldFolder = oldFolder;
     }
 
     public void start(){
@@ -57,9 +55,9 @@ public class CompareThread extends Thread {
             }
         });
 
-        FolderFileList list = new FolderFileList(src, dist);
+        FolderFileList list = new FolderFileList(oldFolder, newFolder);
 
-        FolderDifferResult results = new FolderDifferResult(src, dist);
+        FolderDifferResult results = new FolderDifferResult(oldFolder, newFolder);
 
         boolean deleteSpaces = AquaStepCounter.getConfig().isStripWhite();
         boolean deleteComments = AquaStepCounter.getConfig().isStripComment();
@@ -86,7 +84,7 @@ public class CompareThread extends Thread {
                 });
 
                 // diffの実行
-                FileDiffer differ = new FileDiffer(src, dist, file, config);
+                FileDiffer differ = new FileDiffer(oldFolder, newFolder, file, config);
                 if ( deleteSpaces ) differ.deleteSpaces();
                 if ( deleteComments ) differ.deleteComments();
 
@@ -94,14 +92,7 @@ public class CompareThread extends Thread {
                 results.addResult(file, result);
 
                 // UI表示用データの作成
-                final String[] tableItemData = new String[6];
-                File f = new File(file);
-                tableItemData[0] = f.getParent();
-                tableItemData[1] = f.getName();
-                tableItemData[2] = String.valueOf(result.getNoChanged());
-                tableItemData[3] = String.valueOf(result.getEdited());
-                tableItemData[4] = String.valueOf(result.getAdded());
-                tableItemData[5] = String.valueOf(result.getDeleted());
+                final String[] tableItemData = result.getAllAsStringArray();
 
                 // UI更新処理 1組のファイルの比較結果を追加
                 display.asyncExec( new Runnable() {
