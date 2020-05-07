@@ -1,0 +1,214 @@
+
+
+
+
+
+
+
+
+
+
+enableChannelChat: true
+
+
+
+
+
+playerChatEventListenerPriority: 'HIGH'
+
+
+
+
+
+noJoinAsGlobal: true
+
+
+loggingChat: true
+
+
+
+loggingChatToHawkEye: true
+
+
+
+
+loggingChatToPrism: true
+
+
+displayChatOnConsole: true
+
+
+
+globalMarker: '!'
+
+
+zeroMemberRemove: false
+
+
+showListOnJoin: false
+
+
+
+createChannelOnJoinCommand: false
+
+
+
+
+globalChannel: ''
+
+
+
+
+forceJoinChannels: []
+
+
+formatConstraint: ['%username', '%msg']
+
+
+
+
+
+
+
+
+
+
+
+
+
+defaultFormat: '&f[%color%ch&f]%prefix%username%suffix&a:&f %msg'
+
+
+opListenAllChannel: false
+
+
+
+minChannelNameLength: 4
+
+
+
+maxChannelNameLength: 20
+
+
+
+
+
+
+enableQuickChannelChat: true
+
+
+quickChannelChatSeparator: ':'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+defaultFormatForPrivateMessage: '&7[%player -> %to]&f %msg'
+
+
+
+
+
+
+sendBroadcastChannelChatToDynmap: true
+
+
+
+
+
+sendFormattedMessageToDynmap: false
+
+
+
+
+dynmapChannel: ''
+
+
+
+
+
+
+
+ngword: ['ちん(こ|ぽ|ちん)']
+
+
+
+
+
+
+
+
+ngwordAction: mask
+
+
+
+
+
+
+
+
+
+enableNormalChatMessageFormat: true
+
+
+
+
+
+
+
+
+
+
+normalChatMessageFormat: '&f%prefix%username%suffix&a:&f %msg'
+
+
+
+enableNormalChatColorCode: true
+
+
+
+
+
+
+
+
+
+
+japanizeType: GoogleIME
+
+
+
+
+
+
+
+
+
+japanizeDisplayLine: 1
+
+
+
+
+
+japanizeLine1Format: '%msg &6(%japanize)'
+
+
+
+
+
+japanizeLine2Format: '&6[JP] %japanize'
+
+
+japanizeIgnorePlayerName: true

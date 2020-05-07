@@ -35,6 +35,8 @@ public class CommentStripper {
         } else if ( type.getType() == CommentConfigType.SHELL ) {
             return deleteShellLineComment(input, type.getLineCommentSimbol(),
                     type.getExtraSimbol());
+        } else if ( type.getType() == CommentConfigType.BAT ) {
+            return deleteRegexLineComment(input, type.getLineCommentSimbol());
         } else if ( type.getType() == CommentConfigType.HTML ) {
             return deleteHtmlComments(input, type.getBlockCommentStartSimbol(),
                     type.getBlockCommentEndSimbol(), type.getExtraSimbol());
@@ -72,14 +74,14 @@ public class CommentStripper {
                 // ブロック型コメントのみ見つかった場合
                 if ( content.indexOf(blockEnd, bsIndex) == -1 ) {
                     // 文字列中にブロック開始記号が入ってしまっていた場合
-                    throw new IOException("Format error.");
+                    throw new IOException("Complex comment type anaysis error.");
                 }
                 int beIndex = content.indexOf(blockEnd, bsIndex) + blockEnd.length();
-                if ( content.substring(bsIndex, beIndex).indexOf("\n") != -1 ) {
-                    content.replace(bsIndex, beIndex, "\n");
-                } else {
-                    content.replace(bsIndex, beIndex, "");
-                }
+
+                // ブロックコメント部分の改行コードの個数を取得し、、ブロックコメントを消去して、代わりに改行コードをもとあった個数分挿入する
+                int lfcount = countLFCodes(content.substring(bsIndex, beIndex));
+                content.replace(bsIndex, beIndex, "");
+                for ( int i=0; i<lfcount; i++ ) content.insert(bsIndex, "\n");
 
             } else if ( ( bsIndex != -1 && lIndex != -1 && bsIndex >= lIndex )
                     || ( bsIndex == -1 && lIndex != -1 ) ) {
@@ -114,7 +116,7 @@ public class CommentStripper {
             int start = content.indexOf(blockStart);
             if ( content.indexOf(blockEnd, start) == -1 ) {
                 // 文字列中にブロック開始記号が入ってしまっていた場合
-                throw new IOException("Format error.");
+                throw new IOException("Block comment type anaysis error.");
             }
             int end = content.indexOf(blockEnd, start) + blockEnd.length();
             if ( content.substring(start, end).indexOf("\n") != -1 ) {
@@ -142,23 +144,49 @@ public class CommentStripper {
             int end = content.indexOf("\n", start);
             if ( end == -1 ) {
                 end = content.length() - 1; // ファイルの最後にセット
-            } else {
-                end += 1; // 改行コード込みで置き換える
             }
-            content.replace(start, end, "\n");
+            content.replace(start, end, "");
         }
 
         return content.toString();
     }
 
     /**
-     * Shell形式の行コメントを除去する。Shell形式では、行頭にしかコメントがこない（行の途中からのコメントは無い）。
+     * Shell形式の行コメントを除去する。
      * @param input 変換前のドキュメント
-     * @param regex コメント開始シンボル（正規表現）
+     * @param lineStart 行コメントのシンボル
      * @param shellFlag ドキュメントの先頭に現れるコメント行（例外として削除を行わない）
      * @return 変換後のドキュメント
      */
-    private static String deleteShellLineComment(String input, String regex, String[] shellFlag) {
+    private static String deleteShellLineComment(String input, String lineStart, String[] shellFlag) {
+
+        // 行コメントを除去する
+        String content = deleteLineComment(input, lineStart);
+
+        if ( shellFlag != null && shellFlag.length >= 1 && !shellFlag[0].isEmpty() ) {
+            // 1行目を取得する
+            String firstLine = "";
+            int firstLineEnd = input.indexOf("\n");
+            if ( firstLineEnd >= 0 ) {
+                firstLine = input.substring(0, firstLineEnd);
+            }
+
+            // 1行目がshellFlagに一致していたなら、contentの先頭に足して戻す
+            if ( firstLine.matches(shellFlag[0]) ) {
+                content = firstLine + content;
+            }
+        }
+
+        return content;
+    }
+
+    /**
+     * 行コメントを除去する。このタイプの行コメントは、必ず行頭からコメントが始まる（行の途中からコメントが始まることは無い）。
+     * @param input 変換前のドキュメント
+     * @param regex 行コメントのシンボル（正規表現）
+     * @return 変換後のドキュメント
+     */
+    private static String deleteRegexLineComment(String input, String regex) {
 
         String[] lines = input.split("\n");
         StringBuffer buf = new StringBuffer();
@@ -167,17 +195,11 @@ public class CommentStripper {
             return input;
         }
 
-        // 最初の1行目が、shellFlagに該当するかどうか確認する
-        if ( ( (shellFlag == null || shellFlag.length == 0 || shellFlag[0].length() == 0)
-                || !lines[0].matches(shellFlag[0]) ) && !lines[0].matches(regex) ) {
-            buf.append(lines[0] + "\n");
-        }
-
-        // 2行目以降を確認する
-        for ( int i=1; i<lines.length; i++ ) {
-            if ( !lines[i].matches(regex) ) {
-                buf.append(lines[i] + "\n");
+        for ( String line : lines ) {
+            if ( !line.matches(regex) ) {
+                buf.append(line);
             }
+            buf.append("\n");
         }
 
         return buf.toString();
@@ -220,7 +242,7 @@ public class CommentStripper {
             matcherEnd.region(innerStart, contentEnd);
             if ( !matcherEnd.find() ) {
                 // 文字列中にブロック開始記号が入ってしまっていた場合
-                throw new IOException("Format error.");
+                throw new IOException("JSP comment type anaysis error.");
             }
             int innerEnd = matcherEnd.start();
             String innerOrg = temp.substring(innerStart, innerEnd);
@@ -326,5 +348,21 @@ public class CommentStripper {
                 return output.toString();
             }
         }
+    }
+
+    /**
+     * 文字列中に改行コードが何個入っているのかを調べて返す
+     * @param src
+     * @return
+     */
+    private static int countLFCodes(String src) {
+        int count = 0;
+        int index = 0;
+        int next;
+        while ((next = src.indexOf("\n", index)) != -1) {
+            count++;
+            index = next + 1;
+        }
+        return count;
     }
 }

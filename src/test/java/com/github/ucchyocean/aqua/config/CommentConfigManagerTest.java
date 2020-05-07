@@ -23,7 +23,7 @@ public class CommentConfigManagerTest extends TestCase {
         File[] files = (new File("src\\main\\resources\\configs")).listFiles();
         if ( files != null ) {
             for ( File file : files ) {
-                configs.add(CommentConfig.load(file));
+                if ( file.getName().endsWith(".yml") ) configs.add(CommentConfig.load(file));
             }
         }
 

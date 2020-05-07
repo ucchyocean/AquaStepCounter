@@ -8,4 +8,4 @@ blockCommentEndSimbol: ''
 description: Analyzer for properties/yaml file ver.1.0
 blockCommentStartSimbol: ''
 type: SHELL
-lineCommentSimbol: "^[ \t]*#.*$"
+lineCommentSimbol: '#'

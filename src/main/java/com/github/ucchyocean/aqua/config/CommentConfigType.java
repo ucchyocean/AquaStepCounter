@@ -17,6 +17,9 @@ public enum CommentConfigType {
     /** 行コメント（shellタイプ） */
     SHELL,
 
+    /** 行コメント（batタイプ） */
+    BAT,
+
     /** ブロックコメントのみ */
     BLOCK_COMMENT,
 

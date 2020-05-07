@@ -5,10 +5,16 @@
  */
 package com.github.ucchyocean.aqua.config;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * コメント解析設定管理クラス
@@ -19,7 +25,7 @@ public class CommentConfigManager {
     private static int MAX_LABEL_LENGTH = 50;
     private static String DEFAULT_CONFIG_FOLDER = "/configs/";
 
-    private ArrayList<CommentConfig> configs = new ArrayList<CommentConfig>();
+    private HashMap<String, CommentConfig> configs = new HashMap<>();
 
     /**
      * 指定されたフォルダから、コメント解析設定をロードする
@@ -44,7 +50,9 @@ public class CommentConfigManager {
             CommentConfig config = CommentConfig.load(file);
             if ( config == null ) continue;
 
-            manager.configs.add(config);
+            for ( String suf : config.getSupportedSuffixes() ) {
+                manager.configs.put(suf, config);
+            }
         }
 
         return manager;
@@ -58,9 +66,20 @@ public class CommentConfigManager {
 
         CommentConfigManager manager = new CommentConfigManager();
 
-        for ( String fileName : new String[] {
-                "bat.yml", "ccjava.yml", "css.yml", "html.yml", "inf.yml",
-                "jsp.yml", "properties.yml", "sh.yml", "xml.yml" } ) {
+        // jarファイル内の/configs/list.txtから、デフォルトのファイル一覧を読み込む
+        List<String> fileNames = new ArrayList<>();
+        try ( BufferedReader reader = new BufferedReader(new InputStreamReader(
+                CommentConfigManager.class.getResourceAsStream(
+                        DEFAULT_CONFIG_FOLDER + "list.txt") ) ) ) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                fileNames.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for ( String fileName : fileNames ) {
             // NOTE: CommentConfigManagerTestのテストケースで失敗する場合は、このリストが不足している可能性がある。
 
             InputStream is = CommentConfigManager.class.getResourceAsStream(
@@ -70,7 +89,9 @@ public class CommentConfigManager {
                 CommentConfig config = CommentConfig.load(is);
                 if ( config == null ) continue;
 
-                manager.configs.add(config);
+                for ( String suf : config.getSupportedSuffixes() ) {
+                    manager.configs.put(suf, config);
+                }
             }
         }
 
@@ -83,11 +104,7 @@ public class CommentConfigManager {
      * @return コメント解析設定。対応するコメント解析設定が見つからない場合はnullが返される。
      */
     public CommentConfig getConfig(String suffix) {
-
-        for ( CommentConfig config : configs ) {
-            if ( config.getSupportedSuffixes().contains(suffix) ) return config;
-        }
-        return null;
+        return configs.get(suffix);
     }
 
     /**
@@ -98,7 +115,7 @@ public class CommentConfigManager {
 
         StringBuffer output = new StringBuffer();
 
-        for ( CommentConfig config : configs ) {
+        for ( CommentConfig config : getAllConfig() ) {
 
             output.append( config.getDescription() + "\n\t" );
             List<String> sufs = config.getSupportedSuffixes();
@@ -122,7 +139,7 @@ public class CommentConfigManager {
      * ロードされているすべてのコメント解析設定を返す
      * @return すべてのコメント解析設定
      */
-    public ArrayList<CommentConfig> getAllConfig() {
-        return configs;
+    public Set<CommentConfig> getAllConfig() {
+        return new HashSet<CommentConfig>(configs.values());
     }
 }

@@ -8,4 +8,4 @@ blockCommentEndSimbol: ''
 description: Analyzer for inf file ver.1.0
 blockCommentStartSimbol: ''
 type: SHELL
-lineCommentSimbol: ;.*$
+lineCommentSimbol: ;

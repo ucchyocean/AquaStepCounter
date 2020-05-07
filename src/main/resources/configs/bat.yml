@@ -5,5 +5,5 @@ name: Bat
 blockCommentEndSimbol: ''
 description: Analyzer for bat scripts ver.1.0
 blockCommentStartSimbol: ''
-type: SHELL
-lineCommentSimbol: "^@?[Rr][Ee][Mm](|[ \t\n\r].*)$"
+type: BAT
+lineCommentSimbol: "^[ \t]*@?[Rr][Ee][Mm](|[ \t\n\r].*)$"
