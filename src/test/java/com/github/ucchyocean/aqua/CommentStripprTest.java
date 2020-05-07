@@ -29,7 +29,8 @@ public class CommentStripprTest extends TestCase {
         matchStripTest("sample.bat", withDebugPrint);
         matchStripTest("sample.yml", withDebugPrint);
         matchStripTest("sample.java", withDebugPrint);
-        matchStripTest("sample.jsp", true);
+        matchStripTest("sample.htm", withDebugPrint);
+        matchStripTest("sample.jsp", withDebugPrint);
     }
 
     private void matchStripTest(String testFileName, boolean withDebugPrint) {

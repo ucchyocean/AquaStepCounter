@@ -115,15 +115,15 @@ public class CommentStripper {
         while ( content.indexOf(blockStart) != -1 ) {
             int start = content.indexOf(blockStart);
             if ( content.indexOf(blockEnd, start) == -1 ) {
-                // 文字列中にブロック開始記号が入ってしまっていた場合
+                // 文字列中にブロック開始記号が入ってしまっていた場合など
                 throw new IOException("Block comment type anaysis error.");
             }
             int end = content.indexOf(blockEnd, start) + blockEnd.length();
-            if ( content.substring(start, end).indexOf("\n") != -1 ) {
-                content.replace(start, end, "\n");
-            } else {
-                content.replace(start, end, "");
-            }
+
+            // ブロックコメント部分の改行コードの個数を取得し、、ブロックコメントを消去して、代わりに改行コードをもとあった個数分挿入する
+            int lfcount = countLFCodes(content.substring(start, end));
+            content.replace(start, end, "");
+            for ( int i=0; i<lfcount; i++ ) content.insert(start, "\n");
         }
 
         return content.toString();
@@ -181,7 +181,8 @@ public class CommentStripper {
     }
 
     /**
-     * 行コメントを除去する。このタイプの行コメントは、必ず行頭からコメントが始まる（行の途中からコメントが始まることは無い）。
+     * 行コメントを除去する。<br/>
+     * このタイプのコメントは、必ず行頭からコメントが始まる（行の途中からコメントが始まることは無い）。そのため、行コメントに一致する行は、行ごと除去する。
      * @param input 変換前のドキュメント
      * @param regex 行コメントのシンボル（正規表現）
      * @return 変換後のドキュメント
@@ -206,7 +207,8 @@ public class CommentStripper {
     }
 
     /**
-     * JSP形式のコメントを除去する。
+     * JSP形式のコメントを除去する。<br/>
+     * このタイプのコメントは、まずJSPのコメントを除去し、次にHTMLのコメントを除去して、最後にJavaコード部分をJavaとしてコメント除去する。
      * @param input 変換前のドキュメント
      * @param blockStart
      * @param blockEnd
@@ -227,7 +229,13 @@ public class CommentStripper {
         String scriptBlockEndSimbol = extra[3];
         String scriptLineSimbol = extra[4];
 
-        String temp = deleteBlockComment(input, blockStart, blockEnd);
+        // JSPのコメント除去
+        String temp2 = deleteBlockComment(input, blockStart, blockEnd);
+
+        // HTMLのコメント除去
+        String temp = deleteComments(temp2, AquaStepCounter.getCommentConfigManager().getConfig(".html"));
+
+        // Javaのコメント除去
         StringBuffer output = new StringBuffer(temp);
         int contentEnd = temp.length() - 1;
 
@@ -263,7 +271,8 @@ public class CommentStripper {
     }
 
     /**
-     * HTML形式のコメントを除去する。
+     * HTML形式のコメントを除去する。<br/>
+     * このタイプのコメントは、HTMLのブロックコメントと、scriptタグ/styleタグ内のJavaScriptコメントが、複合して現れる。
      * @param input 変換前のドキュメント
      * @param blockStart
      * @param blockEnd
@@ -306,25 +315,24 @@ public class CommentStripper {
                 // 両方見つかったがコメントブロックのほうが先に現れた場合か、
                 // コメントブロックのみ見つかった場合
                 if ( input.indexOf(blockEnd, bsIndex) == -1 ) {
-                    throw new IOException("Format error.");
+                    throw new IOException("HTML comment type anaysis error.");
                     // ここに来ることは（おそらく）ほとんどない。
                 }
 
                 if ( index <= bsIndex - 1 ) {
                     output.append(input.substring(index, bsIndex));
                 }
-                index = input.indexOf(blockEnd, bsIndex)
-                        + blockEnd.length() + 1;
-                if ( input.substring(bsIndex, index).indexOf("\n") != -1 ) {
-                    output.append("\n");
-                }
+                index = input.indexOf(blockEnd, bsIndex) + blockEnd.length() + 1;
+
+                int lfcount = countLFCodes(input.substring(bsIndex, index));
+                for ( int i=0; i<lfcount; i++ ) output.append("\n");
 
             } else if ( ( bsIndex != -1 && msIndex != -1 && bsIndex >= msIndex )
                     || ( bsIndex == -1 && msIndex != -1 ) ) {
                 // 両方見つかったがスクリプトタグのほうが先に現れた場合か、
                 // スクリプトタグのみ見つかった場合
                 if ( !msEnd.find( msStart.end() ) ) {
-                    throw new IOException("Format error.");
+                    throw new IOException("HTML comment type anaysis error.");
                     // ここに来ることは（おそらく）ほとんどない。
                 }
                 int meIndex = msEnd.end();
