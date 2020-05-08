@@ -17,14 +17,14 @@ pushd ..
 set BASE_FOLDER=%cd%
 set TARGET_FOLDER=%cd%\target
 set TOOLS_FOLDER=%cd%\tools
-set RELEASE_WIN32=%TARGET_FOLDER%\release_win32
-set RELEASE_WIN64=%TARGET_FOLDER%\release_win64
+set RELEASE_WIN32=%TARGET_FOLDER%\AquaStepCounter_win32
+set RELEASE_WIN64=%TARGET_FOLDER%\AquaStepCounter_win64
 popd
 
 
 echo releaseフォルダをクリアして新規作成します。
-del AquaStepCounter_win32.zip
-del AquaStepCounter_win64.zip
+del "%TARGET_FOLDER%\AquaStepCounter_win32.zip"
+del "%TARGET_FOLDER%\AquaStepCounter_win64.zip"
 if exist "%RELEASE_WIN32%" rmdir /s /q "%RELEASE_WIN32%"
 mkdir "%RELEASE_WIN32%\lib"
 if exist "%RELEASE_WIN64%" rmdir /s /q "%RELEASE_WIN64%"
@@ -48,9 +48,14 @@ copy /y "%BASE_FOLDER%\lib\swt.jar" "%RELEASE_WIN64%\lib"
 
 echo zip圧縮します
 pushd %TARGET_FOLDER%
-"%ARCHIVER%" a AquaStepCounter_win32.zip release_win32
-"%ARCHIVER%" a AquaStepCounter_win64.zip release_win64
+"%ARCHIVER%" a AquaStepCounter_win32.zip AquaStepCounter_win32
+"%ARCHIVER%" a AquaStepCounter_win64.zip AquaStepCounter_win64
 popd
+
+echo zipファイルを移動します
+move /y "%TARGET_FOLDER%\AquaStepCounter_win32.zip" "%BASE_FOLDER%\release"
+move /y "%TARGET_FOLDER%\AquaStepCounter_win64.zip" "%BASE_FOLDER%\release"
+
 
 endlocal
 pause
