@@ -1,18 +1,18 @@
 # AquaStepCounter
 汎用ステップ数カウンター
 
-![スクリーンショット](https://github.com/ucchyocean/AquaStepCounter/blob/master/release/image/screenshot.png?raw=true)
+![スクリーンショット](https://github.com/ucchyocean/AquaStepCounter/blob/master/release/img/screenshot.png?raw=true)
 
 ## ダウンロード
 
-Windows 64bitJava版 - [ダウンロード](https://github.com/ucchyocean/AquaStepCounter/blob/master/release/AquaStepCounter_win64.zip?raw=true)
-Windows 32bitJava版 - [ダウンロード](https://github.com/ucchyocean/AquaStepCounter/blob/master/release/AquaStepCounter_win32.zip?raw=true)
+* Windows 64bitJava版 - [ダウンロード](https://github.com/ucchyocean/AquaStepCounter/blob/master/release/AquaStepCounter_win64.zip?raw=true)
+* Windows 32bitJava版 - [ダウンロード](https://github.com/ucchyocean/AquaStepCounter/blob/master/release/AquaStepCounter_win32.zip?raw=true)
 
 ## 使い方
 
-事前に、Java Runtime（1.8 以降） をダウンロードしてインストールしてください。
-ダウンロードしたzipファイルを、ローカルの任意フォルダへ展開して、出てきた `AquaStepCounter_xxx.exe` を実行してください。
-「変更後(New)」や「変更前(Old)」にフォルダをドラッグアンドドロップして、「カウント実行」を押してください。
+事前に、Java Runtime（1.8 以降） をダウンロードしてインストールしてください。<br/>
+ダウンロードしたzipファイルを、ローカルの任意フォルダへ展開して、出てきた `AquaStepCounter_xxx.exe` を実行してください。<br/>
+「変更後(New)」や「変更前(Old)」にフォルダをドラッグアンドドロップして、「カウント実行」を押してください。<br/>
 NewとOldの各ファイルを比較して、ステップ数の増減を計測します。
 
 ## 使い方（コマンドライン実行）
@@ -35,7 +35,7 @@ LGPLv3を適用します。ソースコードを流用する場合は、流用�
 
 ## コントリビューション
 
-イシュー登録やプルリクエストは、いつでも歓迎です！
+イシュー登録やプルリクエストは、いつでも歓迎です！<br/>
 ガイドラインをご参照ください。
 
 ## 問い合わせ先
