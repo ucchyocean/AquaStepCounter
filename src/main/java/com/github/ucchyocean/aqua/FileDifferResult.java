@@ -5,6 +5,8 @@
  */
 package com.github.ucchyocean.aqua;
 
+import org.apache.commons.jrcs.diff.Revision;
+
 /**
  * StripDifferの結果格納クラス
  * @author ucchy
@@ -28,6 +30,9 @@ public class FileDifferResult {
 
     /** 削除されている行の行数 */
     protected int deleted;
+
+    /** Diff結果 */
+    protected Revision rev;
 
     /**
      * コンストラクタ
@@ -104,5 +109,12 @@ public class FileDifferResult {
      */
     public int getDeleted() {
         return deleted;
+    }
+
+    /**
+     * @return rev
+     */
+    public Revision getRev() {
+        return rev;
     }
 }

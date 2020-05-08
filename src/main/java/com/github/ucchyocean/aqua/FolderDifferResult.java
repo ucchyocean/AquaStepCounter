@@ -65,15 +65,15 @@ public class FolderDifferResult {
         for ( int i=0; i<data.length; i++ ) {
             String line = new String();
             for ( int j=0; j<Messages.TABLE_LABELS.size(); j++ ) {
-                line += data[i][j] + ", ";
+                line += data[i][j] + ",";
             }
             temp.add(line);
         }
         temp.add("");
-        String lastLine = "all, , ";
+        String lastLine = "all,,";
         int[] totalData = getTotalData();
         for ( int i=0; i<4; i++ ) {
-            lastLine += totalData[i] + ", ";
+            lastLine += totalData[i] + ",";
         }
         temp.add(lastLine);
 

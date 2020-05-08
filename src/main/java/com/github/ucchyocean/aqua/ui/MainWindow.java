@@ -6,6 +6,7 @@
 package com.github.ucchyocean.aqua.ui;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +24,9 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TableItem;
 
+import com.github.ucchyocean.aqua.FileDifferResult;
 import com.github.ucchyocean.aqua.FolderDifferResult;
 import com.github.ucchyocean.aqua.Messages;
 
@@ -124,6 +127,11 @@ public class MainWindow {
         gdata.heightHint = 500;
         gdata.widthHint = 800;
         table.setLayoutData( gdata );
+        table.setItemSelectionListener( new SelectionAdapter() {
+            public void widgetDefaultSelected(SelectionEvent e) {
+                onSelectedTableItem(e);
+            }
+        });
 
         // 3～6列目は整数値としてソートするように指示する。残りは文字列（辞書式）ソート。
         table.setIntegerIndex(2);
@@ -239,5 +247,20 @@ public class MainWindow {
 
     public void setNewFolder(String newFolder) {
         newFolderComp.setText(newFolder);
+    }
+
+    private void onSelectedTableItem(SelectionEvent event) {
+        if (lastData == null) return;
+
+        // 選択した行の実行結果を取得
+        TableItem item = (TableItem)event.item;
+        String key = item.getText(0) + File.separator + item.getText(1);
+        FileDifferResult res = lastData.getResult(key);
+
+        if ( res.getRev() != null ) {
+            MessageBox box = new MessageBox(shell, SWT.NONE);
+            box.setMessage(res.getRev().toString());
+            box.open();
+        }
     }
 }

@@ -44,8 +44,8 @@ public class Messages {
     public static String MESSAGE_MAIN =
         "比較元と比較先を入力して実行ボタンを押してください。" +
         "ファイル/フォルダをドラックアンドドロップすることもできます。";
-    public static String MESSAGE_NEWFOLDER = "比較元(New)";
-    public static String MESSAGE_OLDFOLDER = "比較先(Old)";
+    public static String MESSAGE_NEWFOLDER = "変更後(New)";
+    public static String MESSAGE_OLDFOLDER = "変更前(Old)";
     public static String MESSAGE_RUN = "カウント実行";
     public static String MESSAGE_CANCEL = "カウント中断";
     public static String MESSAGE_CLEAR = "表をクリア";

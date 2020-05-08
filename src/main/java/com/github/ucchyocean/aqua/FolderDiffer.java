@@ -52,8 +52,8 @@ public class FolderDiffer {
 
             try {
                 FileDiffer differ = new FileDiffer(oldFolder, newFolder, file, config);
-                if ( deleteSpaces ) differ.deleteSpaces();
                 if ( deleteComments ) differ.deleteComments();
+                if ( deleteSpaces ) differ.deleteSpaces();
 
                 FileDifferResult result = differ.getDiffData();
                 results.addResult(file, result);

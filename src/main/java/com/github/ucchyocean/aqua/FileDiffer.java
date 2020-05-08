@@ -153,6 +153,7 @@ public class FileDiffer {
 
         // 新しいファイルの行数を初期値として設定する
         result.noChanged = newContentTemp.length;
+        result.rev = rev;
 
         for ( int i=0; i<rev.size(); i++ ) {
             Delta d = rev.getDelta(i);
