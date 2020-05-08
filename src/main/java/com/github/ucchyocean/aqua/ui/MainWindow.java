@@ -257,7 +257,7 @@ public class MainWindow {
         String key = item.getText(0) + File.separator + item.getText(1);
         FileDifferResult res = lastData.getResult(key);
 
-        if ( res.getRev() != null ) {
+        if ( res != null && res.getRev() != null ) {
             MessageBox box = new MessageBox(shell, SWT.NONE);
             box.setMessage(res.getRev().toString());
             box.open();

@@ -15,7 +15,9 @@ import java.util.Collections;
  */
 public class FolderFileList {
 
-    String[] list;
+    private String[] list;
+    private String oldBase;
+    private String newBase;
 
     /**
      * コンストラクタ
@@ -34,11 +36,36 @@ public class FolderFileList {
         return list;
     }
 
+    /**
+     * @return oldBase
+     */
+    public String getOldBase() {
+        return oldBase;
+    }
+
+    /**
+     * @return newBase
+     */
+    public String getNewBase() {
+        return newBase;
+    }
+
     // ファイルリストを作成する
     private String[] createFileList(String oldBase, String newBase) {
 
         ArrayList<String> oldVec = createFileListInternal(oldBase, null);
+        if ( oldVec.size() == 1 && oldBase.endsWith(oldVec.get(0)) ) {
+            // ファイル比較
+            oldBase = oldBase.substring(0, oldBase.length() - oldVec.get(0).length() - 1);
+        }
+        this.oldBase = oldBase;
+
         ArrayList<String> newVec = createFileListInternal(newBase, null);
+        if ( newVec.size() == 1 && newBase.endsWith(newVec.get(0)) ) {
+            // ファイル比較
+            newBase = newBase.substring(0, newBase.length() - newVec.get(0).length() - 1);
+        }
+        this.newBase = newBase;
 
         // 2つのリストをマージ
         for ( int i=0; i<newVec.size(); i++ ) {
@@ -73,7 +100,11 @@ public class FolderFileList {
         }
 
         if ( file.isFile() ) {
-            output.add(filename);
+            if ( filename == null ) {
+                output.add(file.getName());
+            } else {
+                output.add(filename);
+            }
             return output;
         }
 

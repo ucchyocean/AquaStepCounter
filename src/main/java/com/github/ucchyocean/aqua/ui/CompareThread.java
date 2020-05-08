@@ -56,6 +56,8 @@ public class CompareThread extends Thread {
         });
 
         FolderFileList list = new FolderFileList(oldFolder, newFolder);
+        if ( !oldFolder.equals(list.getOldBase()) ) oldFolder = list.getOldBase();
+        if ( !newFolder.equals(list.getNewBase()) ) newFolder = list.getNewBase();
 
         FolderDifferResult results = new FolderDifferResult(oldFolder, newFolder);
 
