@@ -71,8 +71,9 @@ public class AquaStepCounter {
             // ヘルプ表示
             System.out.println(Messages.SOFTWARE_NAME + " - v" + Messages.SOFTWARE_VERSION);
             System.out.println();
-            System.out.println("Usage: AquaStepCounter.exe "
-                    + "[-?] [-ui] [-new (folder path)] [-old (folder path)] [-r (report file path)]");
+            System.out.println("Usage: asc_commandline.bat "
+                    + "[-?] [-ui] [-new (folder path)] [-old (folder path)] "
+                    + "[-r (report file path)] [-dc|-cc] [-dw|-cw]");
             System.out.println();
             return;
         }
