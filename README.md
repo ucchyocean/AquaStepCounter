@@ -36,7 +36,7 @@ LGPLv3を適用します。ソースコードを流用する場合は、流用�
 ## コントリビューション
 
 イシュー登録やプルリクエストは、いつでも歓迎です！<br/>
-ガイドラインをご参照ください。
+[ガイドライン](https://github.com/ucchyocean/AquaStepCounter/blob/master/CONTRIBUTING.md)をご参照ください。
 
 ## 問い合わせ先
 
