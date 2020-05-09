@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ucchyocean</groupId>
   <artifactId>AquaStepCounter</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <description>Step Counter for general-purpose source codes.</description>
 
   <licenses>
@@ -82,7 +82,7 @@
         <executions>
           <execution>
             <id>exewrap</id>
-            <phase>package</phase>
+            <phase>deploy</phase>
             <goals>
               <goal>run</goal>
             </goals>

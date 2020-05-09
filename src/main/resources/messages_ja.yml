@@ -8,10 +8,10 @@ SOFTWARE_USAGE_URL: "https://github.com/ucchyocean/AquaStepCounter"
 
 # メニュー項目
 MENU_MAIN: "メニュー(&M)"
-MENU_PREFS: "設定(&C)"
+MENU_PREFS: "設定(&P)"
 MENU_EXIT: "終了(&E)"
 MENU_HELP: "ヘルプ(&H)"
-MENU_DESC: "対応済み拡張子一覧を開く(&D)"
+MENU_DESC: "対応済み拡張子一覧を開く(&C)"
 MENU_HOMEPAGE: "ソフトウェアの情報ページを開く(&P)"
 MENU_VERSION: "バージョン情報(&V)"
 

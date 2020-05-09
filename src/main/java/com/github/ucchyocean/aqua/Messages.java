@@ -26,10 +26,10 @@ public class Messages {
 
     // メニュー項目
     public static String MENU_MAIN = "メニュー(&M)";
-    public static String MENU_PREFS = "設定(&C)";
+    public static String MENU_PREFS = "設定(&P)";
     public static String MENU_EXIT = "終了(&E)";
     public static String MENU_HELP = "ヘルプ(&H)";
-    public static String MENU_DESC = "対応済み拡張子一覧を開く(&D)";
+    public static String MENU_DESC = "対応済み拡張子一覧を開く(&C)";
     public static String MENU_HOMEPAGE = "ソフトウェアの情報ページを開く(&P)";
     public static String MENU_VERSION = "バージョン情報(&V)";
 

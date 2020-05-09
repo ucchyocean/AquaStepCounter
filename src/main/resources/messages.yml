@@ -1,0 +1,57 @@
+
+# Software Information
+SOFTWARE_NAME: "${project.name}"
+SOFTWARE_VERSION: "${project.version}"
+SOFTWARE_AUTHOR_INFO: "ucchy"
+SOFTWARE_DATE_INFO: "${build.date}"
+SOFTWARE_USAGE_URL: "https://github.com/ucchyocean/AquaStepCounter"
+
+# Menu Items
+MENU_MAIN: "&Menu"
+MENU_PREFS: "&Preferences"
+MENU_EXIT: "&Exit"
+MENU_HELP: "&Help"
+MENU_DESC: "&Comment Config Information"
+MENU_HOMEPAGE: "&Project Web Page"
+MENU_VERSION: "&Version Information"
+
+# Dialog Titles
+TITLE_VERSION: "Version  Information"
+TITLE_DESC: "Comment Config Information"
+TITLE_EXCEPTION: "Exception"
+TITLE_CANCELED: "Canceled"
+TITLE_PREFS: "Preferences"
+
+# Dialog Messages
+MESSAGE_MAIN: "Input Before change and After change and press Execute button. You can also drag and drop file/folder."
+MESSAGE_NEWFOLDER: "After change"
+MESSAGE_OLDFOLDER: "Before change"
+MESSAGE_RUN: "Execute"
+MESSAGE_CANCEL: "Cancel"
+MESSAGE_CLEAR: "Clear Table"
+MESSAGE_EXPORT: "Export to CSV file"
+MESSAGE_DESC: "The analysis classes included in this version are:"
+MESSAGE_BUTTON_REF: "Folder Reference"
+MESSAGE_DIR_SELECT: " folder selection"
+MESSAGE_COUNT_RUNNING: "Line Counting......"
+MESSAGE_ERROR: "Error."
+MESSAGE_INTERRUPT: "Canceled."
+
+# Table Labels
+TABLE_LABELS:
+- dir
+- file name
+- nochanged
+- edited
+- added
+- deleted
+
+# Preferences Dialog Messages
+PREFS_NAME_STRIP_COMMENT: "Ignore all comment parts."
+PREFS_NAME_STRIP_WHITE: "Ignore spaces and empty lines."
+
+# Export Dialog Messages
+EXPORT_SUFS:
+- '*.csv'
+EXPORT_DESCS:
+- 'CSV (comma separated) (*.csv)'
