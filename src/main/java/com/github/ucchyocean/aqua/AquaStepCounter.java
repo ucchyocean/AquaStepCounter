@@ -6,6 +6,7 @@
 package com.github.ucchyocean.aqua;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -21,7 +22,7 @@ public class AquaStepCounter {
     private static final AquaStepCounter instance = new AquaStepCounter();
 
     private CommentConfigManager manager;
-    private AquaStepCounterConfig config;
+    private AquaStepCounterPreferences preferences;
 
     /**
      * コンストラクタ
@@ -29,7 +30,7 @@ public class AquaStepCounter {
     public AquaStepCounter() {
 
         // 設定のロード
-        config = AquaStepCounterConfig.load();
+        preferences = AquaStepCounterPreferences.load();
 
         // コメントコンフィグのロード
         manager = CommentConfigManager.loadFromDefaultFiles();
@@ -44,11 +45,11 @@ public class AquaStepCounter {
     }
 
     /**
-     * コンフィグを取得する
-     * @return コンフィグ
+     * 設定を取得する
+     * @return 設定
      */
-    public static AquaStepCounterConfig getConfig() {
-        return instance.config;
+    public static AquaStepCounterPreferences getPrefs() {
+        return instance.preferences;
     }
 
     /**
@@ -73,7 +74,8 @@ public class AquaStepCounter {
             System.out.println();
             System.out.println("Usage: AquaStepCounterCLI.bat "
                     + "[-?] [-ui] [-new (folder path)] [-old (folder path)] "
-                    + "[-r (report file path)] [-dc|-cc] [-dw|-cw]");
+                    + "[-conf (config folder path)] "
+                    + "[-r (output file path)] [-dc|-cc] [-dw|-cw]");
             System.out.println();
             return;
         }
@@ -86,24 +88,30 @@ public class AquaStepCounter {
         // 設定関連
         boolean configModified = false;
         if ( clp.hasParam(CommandLineParser.KEY_DC) ) {
-            getConfig().setStripComment(true);
+            getPrefs().setStripComment(true);
             configModified = true;
         }
         if ( clp.hasParam(CommandLineParser.KEY_CC) ) {
-            getConfig().setStripComment(false);
+            getPrefs().setStripComment(false);
             configModified = true;
         }
         if ( clp.hasParam(CommandLineParser.KEY_DW) ) {
-            getConfig().setStripWhite(true);
+            getPrefs().setStripWhite(true);
             configModified = true;
         }
         if ( clp.hasParam(CommandLineParser.KEY_CW) ) {
-            getConfig().setStripWhite(false);
+            getPrefs().setStripWhite(false);
             configModified = true;
         }
         if ( showUI && configModified ) {
             // UI表示モードで、コンフィグが変更されている場合は、保存を行う
-            getConfig().save();
+            getPrefs().save();
+        }
+
+        // 追加のコメント解析設定
+        if ( clp.hasParam(CommandLineParser.KEY_CONF) ) {
+            AquaStepCounter.getCommentConfigManager().loadAdditional(
+                    new File(clp.get(CommandLineParser.KEY_CONF)));
         }
 
         // メインの処理
@@ -130,7 +138,7 @@ public class AquaStepCounter {
             String oldFolder = clp.get(CommandLineParser.KEY_OLD);
             String newFolder = clp.get(CommandLineParser.KEY_NEW);
             FolderDiffer differ = new FolderDiffer(oldFolder, newFolder,
-                    getConfig().isStripWhite(), getConfig().isStripComment());
+                    getPrefs().isStripWhite(), getPrefs().isStripComment());
             FolderDifferResult result = differ.getDiffData();
             String[] exportData = result.getExportData();
 

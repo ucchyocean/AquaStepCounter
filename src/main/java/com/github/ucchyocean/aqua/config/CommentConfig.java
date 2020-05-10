@@ -41,6 +41,7 @@ public class CommentConfig {
      * コンストラクタ
      * @param name 名前
      * @param description 説明文
+     * @param type タイプ
      * @param supportedSuffixes 対象となるソースコードの拡張子
      * @param blockCommentStartSimbol ブロックコメントの始端
      * @param blockCommentEndSimbol ブロックコメントの終端

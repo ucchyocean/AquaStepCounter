@@ -22,6 +22,7 @@ public class CommandLineParser {
     public static final String KEY_OLD = "old";
     public static final String KEY_UI = "ui";
     public static final String KEY_REPORT = "report";
+    public static final String KEY_CONF = "conf";
 
     public static final String KEY_DC = "deleteComments";
     public static final String KEY_CC = "CountComments";
@@ -87,6 +88,13 @@ public class CommandLineParser {
                 index++;
                 if ( index < args.length ) {
                     params.put(KEY_REPORT, args[index]);
+                }
+
+            } else if (src.equals("-conf") || src.equals("-config")) {
+                // 追加コンフィグフォルダ（-conf/-config、次パラメータでフォルダを指定）
+                index++;
+                if ( index < args.length ) {
+                    params.put(KEY_CONF, args[index]);
                 }
 
             }

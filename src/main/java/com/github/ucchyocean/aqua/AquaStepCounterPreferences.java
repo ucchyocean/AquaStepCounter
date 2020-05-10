@@ -10,26 +10,26 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Aqua Step Counterのコンフィグ管理クラス
+ * Aqua Step Counterの設定管理クラス
  * @author ucchy
  */
-public class AquaStepCounterConfig {
+public class AquaStepCounterPreferences {
 
     /** コメントを除去するかどうか */
     private boolean stripComment = true;
     /** 空白やタブ文字や連続する改行を除去するかどうか */
     private boolean stripWhite = true;
 
-    private AquaStepCounterConfig() {
+    private AquaStepCounterPreferences() {
     }
 
-    public static AquaStepCounterConfig load() {
+    public static AquaStepCounterPreferences load() {
 
-        AquaStepCounterConfig config = new AquaStepCounterConfig();
+        AquaStepCounterPreferences config = new AquaStepCounterPreferences();
 
-        // 現在のフォルダに "config.yml" がある場合は、その内容をロードして反映する。
+        // 現在のフォルダに "preferences.yml" がある場合は、その内容をロードして反映する。
         String cd = new File(".").getAbsoluteFile().getParent();
-        File confFile = new File(cd, "config.yml");
+        File confFile = new File(cd, "preferences.yml");
         if ( confFile.exists() ) {
             try (FileReader reader = new FileReader(confFile) ) {
                 YamlConfig yaml = YamlConfig.load(reader);
@@ -45,9 +45,9 @@ public class AquaStepCounterConfig {
 
     public void save() {
 
-        // 現在のフォルダに "config.yml" として保存する。
+        // 現在のフォルダに "preferences.yml" として保存する。
         String cd = new File(".").getAbsoluteFile().getParent();
-        File confFile = new File(cd, "config.yml");
+        File confFile = new File(cd, "preferences.yml");
 
         YamlConfig yaml = new YamlConfig();
         yaml.set("stripComment", stripComment);

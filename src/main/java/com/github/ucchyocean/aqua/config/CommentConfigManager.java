@@ -28,34 +28,30 @@ public class CommentConfigManager {
     private HashMap<String, CommentConfig> configs = new HashMap<>();
 
     /**
-     * 指定されたフォルダから、コメント解析設定をロードする
+     * 指定されたフォルダから、追加のコメント解析設定をロードする。
+     * 既にロードされているコメント解析設定と、解析対象拡張子が重複している場合は、後からロードされた方で上書きされる。
      * @param folder フォルダ
-     * @return ロードされたCommentConfigManager
      */
-    public static CommentConfigManager load(File folder) {
+    public void loadAdditional(File folder) {
 
         if ( !folder.exists() ) {
-            folder.mkdirs();
+            return;
         }
 
-        CommentConfigManager manager = new CommentConfigManager();
-
         File[] children = folder.listFiles();
-        if ( children == null ) return manager;
+        if ( children == null ) return;
 
         for ( File file : children ) {
 
-            if ( !file.getName().endsWith(".properties") ) continue;
+            if ( !file.getName().endsWith(".yml") && !file.getName().endsWith(".yaml") ) continue;
 
             CommentConfig config = CommentConfig.load(file);
             if ( config == null ) continue;
 
             for ( String suf : config.getSupportedSuffixes() ) {
-                manager.configs.put(suf, config);
+                configs.put(suf, config);
             }
         }
-
-        return manager;
     }
 
     /**

@@ -17,13 +17,14 @@ NewとOldの各ファイルを比較して、ステップ数の増減を計測�
 
 ## 使い方（コマンドライン実行）
 
-`asc_commandline.bat [-?] [-ui] [-new (folder path)] [-old (folder path)] [-r (report file path)] [-dc|-cc] [-dw|-cw]`
+`AquaStepCounterCLI.bat [-?] [-ui] [-new (folder path)] [-old (folder path)] [-conf (config folder path)] [-r (output file path)] [-dc|-cc] [-dw|-cw]`
 
 * `-?` ヘルプを表示します。
 * `-ui` 計測結果を、UIを出して表示します。
 * `-new (folder path)` 変更後(New)のフォルダを指定します。
 * `-old (folder path)` 変更前(Old)のフォルダを指定します。
-* `-r (report file path)` 計測結果を、指定されたファイル名へ、CSV形式で出力します。-ui が指定されている場合は動作しません。
+* `-conf (config folder path)` 追加のコメント解析設定ファイルが格納されているファイルを指定します。
+* `-r (output file path)` 計測結果を、指定されたファイル名へ、CSV形式で出力します。-ui が指定されている場合は動作しません。
 * `-dc` コメントを計測の対象外にします。
 * `-cc` コメントを計測の対象にします。
 * `-dw` 空白や空行を計測の対象外にします。

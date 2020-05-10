@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import com.github.ucchyocean.aqua.AquaStepCounter;
-import com.github.ucchyocean.aqua.AquaStepCounterConfig;
+import com.github.ucchyocean.aqua.AquaStepCounterPreferences;
 import com.github.ucchyocean.aqua.Messages;
 
 /**
@@ -42,12 +42,12 @@ public class PreferencesDialog {
         Button bStripComment = new Button(parent, SWT.CHECK);
         bStripComment.setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
         bStripComment.setText(Messages.PREFS_NAME_STRIP_COMMENT);
-        bStripComment.setSelection(AquaStepCounter.getConfig().isStripComment());
+        bStripComment.setSelection(AquaStepCounter.getPrefs().isStripComment());
 
         Button bStripWhite = new Button(parent, SWT.CHECK);
         bStripWhite.setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
         bStripWhite.setText(Messages.PREFS_NAME_STRIP_WHITE);
-        bStripWhite.setSelection(AquaStepCounter.getConfig().isStripWhite());
+        bStripWhite.setSelection(AquaStepCounter.getPrefs().isStripWhite());
 
         // ボタンバー
         Composite buttonComp = new Composite(parent, SWT.NONE);
@@ -62,7 +62,7 @@ public class PreferencesDialog {
         okButton.setText("OK");
         okButton.addSelectionListener( new SelectionAdapter() {
             public void widgetSelected(SelectionEvent event) {
-                AquaStepCounterConfig config = AquaStepCounter.getConfig();
+                AquaStepCounterPreferences config = AquaStepCounter.getPrefs();
                 config.setStripComment(bStripComment.getSelection());
                 config.setStripWhite(bStripWhite.getSelection());
                 config.save();

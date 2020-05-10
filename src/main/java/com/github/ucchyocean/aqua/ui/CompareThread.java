@@ -61,8 +61,8 @@ public class CompareThread extends Thread {
 
         FolderDifferResult results = new FolderDifferResult(oldFolder, newFolder);
 
-        boolean deleteSpaces = AquaStepCounter.getConfig().isStripWhite();
-        boolean deleteComments = AquaStepCounter.getConfig().isStripComment();
+        boolean deleteSpaces = AquaStepCounter.getPrefs().isStripWhite();
+        boolean deleteComments = AquaStepCounter.getPrefs().isStripComment();
 
         CommentConfigManager manager = AquaStepCounter.getCommentConfigManager();
 

@@ -7,6 +7,7 @@ package com.github.ucchyocean.aqua.config;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -41,5 +42,32 @@ public class CommentConfigManagerTest extends TestCase {
             assertTrue(find);
         }
         assertTrue(true);
+    }
+
+    public void testAdditionalFolderLoad() {
+        // CommentConfigManagerに追加のコメント解析設定を読み込みさせるテスト
+
+        CommentConfigManager manager = CommentConfigManager.loadFromDefaultFiles();
+
+        // 偽のコメント解析設定を作成して保存
+        File tempFolder = new File("target", "temp");
+        if ( !tempFolder.exists() ) tempFolder.mkdirs();
+        List<String> sufs = new ArrayList<>();
+        sufs.add(".bat");
+        sufs.add(".cpp");
+        sufs.add(".java");
+        sufs.add(".xxx");
+        CommentConfig conf = new CommentConfig("nise", "nise no config",
+                CommentConfigType.COMPLEX, sufs, "hoge", "hage", "hige");
+        conf.save(new File(tempFolder, "nise.yml"));
+
+        // フォルダから追加のコメント解析設定を読み込み
+        manager.loadAdditional(tempFolder);
+
+
+        for ( String s : sufs ) {
+            assertTrue(manager.getConfig(s) != null);
+            assertTrue(manager.getConfig(s).getName().equals("nise"));
+        }
     }
 }
