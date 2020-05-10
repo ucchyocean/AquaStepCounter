@@ -49,7 +49,7 @@ public class CommentConfigDefaultMaker {
 
         config = new CommentConfig(
                 "Properties", "Analyzer for properties/yaml file ver.1.0", CommentConfigType.SHELL,
-                makeList(".properties", ".yml", ".yaml"), "", "", "#");
+                makeList(".properties", ".yml", ".yaml", ".py"), "", "", "#");
         config.save(new File(folder, "properties.yml"));
 
         config = new CommentConfig(

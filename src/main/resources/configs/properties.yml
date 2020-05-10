@@ -3,6 +3,7 @@ supportedSuffixes:
 - .properties
 - .yml
 - .yaml
+- .py
 name: Properties
 blockCommentEndSimbol: ''
 description: Analyzer for properties/yaml file ver.1.0

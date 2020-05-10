@@ -23,11 +23,11 @@ import com.github.ucchyocean.aqua.Messages;
  * 設定ダイアログ
  * @author ucchy
  */
-public class ConfigDialog {
+public class PreferencesDialog {
 
     private Shell shell;
 
-    public ConfigDialog(Shell parent) {
+    public PreferencesDialog(Shell parent) {
         shell = new Shell(parent, SWT.APPLICATION_MODAL|SWT.DIALOG_TRIM);
         createContents(shell);
     }
