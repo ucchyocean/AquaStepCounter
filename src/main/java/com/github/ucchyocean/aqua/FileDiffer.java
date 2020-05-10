@@ -94,7 +94,7 @@ public class FileDiffer {
         if ( ! file.exists() ) {
             return null;
         }
-        StringBuffer temp = new StringBuffer();
+        StringBuilder temp = new StringBuilder();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(file));

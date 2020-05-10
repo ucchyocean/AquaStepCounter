@@ -109,7 +109,7 @@ public class CommentConfigManager {
      */
     public String getDescription() {
 
-        StringBuffer output = new StringBuffer();
+        StringBuilder output = new StringBuilder();
 
         for ( CommentConfig config : getAllConfig() ) {
 

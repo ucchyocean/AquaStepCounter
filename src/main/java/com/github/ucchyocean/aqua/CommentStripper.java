@@ -61,7 +61,7 @@ public class CommentStripper {
     private static String deleteComplexComment(String input, String blockStart,
             String blockEnd, String lineStart) throws IOException {
 
-        StringBuffer content = new StringBuffer(input);
+        StringBuilder content = new StringBuilder(input);
 
         while ( true ) {
 
@@ -110,7 +110,7 @@ public class CommentStripper {
      */
     private static String deleteBlockComment(String input, String blockStart, String blockEnd) throws IOException {
 
-        StringBuffer content = new StringBuffer(input);
+        StringBuilder content = new StringBuilder(input);
 
         while ( content.indexOf(blockStart) != -1 ) {
             int start = content.indexOf(blockStart);
@@ -137,7 +137,7 @@ public class CommentStripper {
      */
     private static String deleteLineComment(String input, String lineStart) {
 
-        StringBuffer content = new StringBuffer(input);
+        StringBuilder content = new StringBuilder(input);
 
         while ( content.indexOf(lineStart) != -1 ) {
             int start = content.indexOf(lineStart);
@@ -190,7 +190,7 @@ public class CommentStripper {
     private static String deleteRegexLineComment(String input, String regex) {
 
         String[] lines = input.split("\n");
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
 
         if ( lines.length == 0 ) {
             return input;
@@ -236,7 +236,7 @@ public class CommentStripper {
         String temp = deleteComments(temp2, AquaStepCounter.getCommentConfigManager().getConfig(".html"));
 
         // Javaのコメント除去
-        StringBuffer output = new StringBuffer(temp);
+        StringBuilder output = new StringBuilder(temp);
         int contentEnd = temp.length() - 1;
 
         Pattern patternStart = Pattern.compile(scriptStartRegex, Pattern.CASE_INSENSITIVE);
@@ -283,7 +283,7 @@ public class CommentStripper {
     private static String deleteHtmlComments(String input, String blockStart, String blockEnd,
             String[] extra) throws IOException {
 
-        StringBuffer output = new StringBuffer();
+        StringBuilder output = new StringBuilder();
         int index = 0;
 
         String scriptStartRegex = extra[0];

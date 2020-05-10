@@ -24,16 +24,17 @@ import junit.framework.TestCase;
 public class CommentStripprTest extends TestCase {
 
     public void testCommentStrippr() {
-        boolean withDebugPrint = false;
-        matchStripTest("sample.sh", withDebugPrint);
-        matchStripTest("sample.bat", withDebugPrint);
-        matchStripTest("sample.yml", withDebugPrint);
-        matchStripTest("sample.java", withDebugPrint);
-        matchStripTest("sample.htm", withDebugPrint);
-        matchStripTest("sample.jsp", withDebugPrint);
+        boolean withDebugPrint = true;
+        boolean withDebugOutput = true;
+        matchStripTest("sample.sh", withDebugPrint, withDebugOutput);
+        matchStripTest("sample.bat", withDebugPrint, withDebugOutput);
+        matchStripTest("sample.yml", withDebugPrint, withDebugOutput);
+        matchStripTest("sample.java", withDebugPrint, withDebugOutput);
+        matchStripTest("sample.htm", withDebugPrint, withDebugOutput);
+        matchStripTest("sample.jsp", withDebugPrint, withDebugOutput);
     }
 
-    private void matchStripTest(String testFileName, boolean withDebugPrint) {
+    private void matchStripTest(String testFileName, boolean withDebugPrint, boolean withDebugOutput) {
 
         System.out.println("CommentStripprTest : " + testFileName);
 
@@ -54,8 +55,12 @@ public class CommentStripprTest extends TestCase {
                 System.out.println(org);
                 System.out.println("--- stripped ---");
                 System.out.println(stripped);
-
-                try ( BufferedWriter writer = new BufferedWriter(new FileWriter("stripped.txt"))) {
+            }
+            if ( withDebugOutput ) {
+                File folder = new File("target", "stripped");
+                if ( !folder.exists() ) folder.mkdirs();
+                try ( BufferedWriter writer = new BufferedWriter(new FileWriter(
+                        new File(folder, testFileName)))) {
                     writer.write(stripped);
                 }
             }
@@ -69,7 +74,7 @@ public class CommentStripprTest extends TestCase {
     }
 
     private static String readAllLines(String filename) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         try ( BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
